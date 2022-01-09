@@ -35,8 +35,6 @@ exports.run = async (client, message, args) => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
 
-  scheduler.setReminder(message.author.id, message.channel, parameters);
-
   if (!parser.validReminderString(message)) {
     await channel.send(genericParserErrorMessage);
     return;
@@ -66,12 +64,6 @@ exports.run = async (client, message, args) => {
     .setThumbnail(client.user.avatarURL());
 
   message.channel.send({ embeds: [embed] });
-
-  await channel.send(
-    `OK **<@${message.author.id}>**, on **${reminderTime.format(
-      dateFormatString
-    )}** I will remind you **${reminder.message}**`
-  );
 
   log(`reminder set for user ${message.author.id}`);
 };
