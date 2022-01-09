@@ -1,7 +1,10 @@
 const Discord = require("discord.js");
 const { Scheduler } = require("../utils/scheduler");
 
-let bot = new Discord.Client();
+let bot = new Discord.Client({
+  disableMentions: "everyone",
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+});
 let scheduler = new Scheduler(bot);
 
 exports.run = async (client, message, args) => {
