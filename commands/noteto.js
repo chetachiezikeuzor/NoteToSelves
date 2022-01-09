@@ -1,3 +1,4 @@
+const moment = require("moment");
 const Discord = require("discord.js");
 const { Scheduler } = require("../utils/scheduler");
 
@@ -6,6 +7,8 @@ let bot = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES"],
 });
 let scheduler = new Scheduler(bot);
+
+const parser = require("./parser");
 
 exports.run = async (client, message, args) => {
   let messageContent = message.content.substring(1);
@@ -34,6 +37,44 @@ exports.run = async (client, message, args) => {
   }, exports.help.cooldown * 1000);
 
   scheduler.setReminder(message.author.id, message.channel, parameters);
+
+  if (!parser.validReminderString(message)) {
+    await channel.send(genericParserErrorMessage);
+    return;
+  }
+
+  let reminder = parser.getMessageAndDateFromReminderString(message);
+  let reminderTime = moment(reminder.date);
+
+  agenda.schedule(reminder.date, reminderJobName, {
+    userId: message.author.id,
+    reminder: reminder.message,
+  });
+
+  let embed = new Discord.MessageEmbed()
+    .setAuthor({
+      name: message.author.tag,
+      iconURL: message.author.avatarURL(),
+    })
+    .setColor(process.env.color_blue)
+    .setTitle(
+      `On **${reminderTime.format(dateFormatString)}** I will remind you **${
+        reminder.message
+      }**`
+    )
+    .setColor(process.env.color_blue)
+    .setTimestamp()
+    .setThumbnail(client.user.avatarURL());
+
+  message.channel.send({ embeds: [embed] });
+
+  await channel.send(
+    `OK **<@${message.author.id}>**, on **${reminderTime.format(
+      dateFormatString
+    )}** I will remind you **${reminder.message}**`
+  );
+
+  log(`reminder set for user ${message.author.id}`);
 };
 
 exports.help = {
