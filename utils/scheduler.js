@@ -285,7 +285,7 @@ class Scheduler {
     agenda.on("ready", async function () {
       agenda.define("send reminder", async (job, done) => {
         const data = job.attrs.data;
-        await sendReminder(data.userId, data.reminder);
+        await sendReminder(data.userId, data.note);
         done();
       });
       await this.start();
