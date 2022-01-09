@@ -12,7 +12,7 @@ const genericSchedulerErrorMessage =
   "Sorry, I couldn't do that at this time. Please try again later.";
 
 const reminderJobName = "send reminder";
-const dateFormatString = "dd, MM Do, YYYY [at] h:m:s a";
+const dateFormatString = "ddd, MMM Do, YYYY [at] hh:mm:ss a";
 
 class Scheduler {
   constructor(bot) {
@@ -52,7 +52,7 @@ class Scheduler {
         .setDescription(
           `On **${reminderTime.format(
             dateFormatString
-          )}** I will remind you: **"${reminder.message}"**`
+          )}**,\nI will remind you: **"${reminder.message}"**`
         )
         .setColor(process.env.color_blue)
         .setTimestamp();
@@ -100,7 +100,7 @@ class Scheduler {
           .setDescription(
             `On **${reminderTime.format(
               dateFormatString
-            )}** I will remind you: **"${job.attrs.data.reminder}"**`
+            )}**,\nI will remind you: **"${job.attrs.data.reminder}"**`
           )
           .setTimestamp();
 
