@@ -1,0 +1,26 @@
+{
+  "name": "notetoselves",
+  "version": "0.0.1",
+  "description": "NoteToSelves Discord Bot. Made by Chetachi ❤️.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chetachi",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.6.0"
+  },
+  "dependencies": {
+    "chrono-node": "^2.3.5",
+    "cron": "^1.8.2",
+    "discord.js": "^13.5.1",
+    "dotenv": "^8.2.0",
+    "es6-promise": "^4.2.6",
+    "isomorphic-fetch": "^3.0.0",
+    "moment": "^2.29.1",
+    "mongoose": "^6.1.5",
+    "npm": "^7.20.6"
+  }
+}
