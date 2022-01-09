@@ -60,8 +60,7 @@ class Scheduler {
           )}** I will remind you **${reminder.message}**`
         )
         .setColor(process.env.color_blue)
-        .setTimestamp()
-        .setThumbnail(client.user.avatarURL());
+        .setTimestamp();
 
       await message.channel.send({ embeds: [embed] });
 
