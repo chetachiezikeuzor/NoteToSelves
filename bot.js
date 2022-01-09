@@ -4,13 +4,10 @@ const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const fs = require("fs");
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/reminder-bot",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const connection = mongoose.connection;
 connection
