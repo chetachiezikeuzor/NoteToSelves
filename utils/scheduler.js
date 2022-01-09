@@ -34,20 +34,30 @@ class Scheduler {
         return;
       }
 
-      var reminder = parser.getMessageAndDateFromReminderString(message);
-
-      var reminderTime = moment(reminder.date);
+      let reminder = parser.getMessageAndDateFromReminderString(message);
+      let reminderTime = moment(reminder.date);
 
       agenda.schedule(reminder.date, reminderJobName, {
         userId: userId,
         reminder: reminder.message,
       });
 
-      await channel.send(
-        `OK **<@${userId}>**, on **${reminderTime.format(
-          dateFormatString
-        )}** I will remind you **${reminder.message}**`
-      );
+      let embed = new Discord.MessageEmbed()
+        .setAuthor({
+          name: message.author.tag,
+          iconURL: message.author.avatarURL(),
+        })
+        .setColor(process.env.color_blue)
+        .setTitle(
+          `On **${reminderTime.format(
+            dateFormatString
+          )}** I will remind you **${reminder.message}**`
+        )
+        .setColor(process.env.color_blue)
+        .setTimestamp()
+        .setThumbnail(client.user.avatarURL());
+
+      await channel.send({ embeds: [embed] });
 
       log(`reminder set for user ${userId}`);
     };
@@ -144,7 +154,7 @@ class Scheduler {
             );
             return;
           } else {
-            var sb = new StringBuilder();
+            let sb = new StringBuilder();
             sb.appendLine(
               `OK **<@${userId}>**, I have found the following upcoming reminders for you:`
             );

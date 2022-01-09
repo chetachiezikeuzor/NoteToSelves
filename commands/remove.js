@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
       name: message.author.tag,
       iconURL: message.author.avatarURL(),
     })
-    .setColor(process.env.color_blue)
+    .setColor(process.env.color_pink)
     .setDescription(
       `Please wait ${exports.help.cooldown} seconds between commands.`
     );
