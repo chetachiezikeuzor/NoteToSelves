@@ -1,4 +1,5 @@
 const moment = require("moment");
+const parser = require("../utils/parser");
 const Discord = require("discord.js");
 const { Scheduler } = require("../utils/scheduler");
 
@@ -7,8 +8,6 @@ let bot = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES"],
 });
 let scheduler = new Scheduler(bot);
-
-const parser = require("./parser");
 
 exports.run = async (client, message, args) => {
   let messageContent = message.content.substring(1);
