@@ -14,6 +14,11 @@ const genericSchedulerErrorMessage =
 const reminderJobName = "send reminder";
 const dateFormatString = "dddd, MMMM Do, YYYY [at] hh:mm:ss A";
 
+const client = new Discord.Client({
+  disableMentions: "everyone",
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+});
+
 class Scheduler {
   constructor(bot) {
     let getLatestReminderId = async function getLatestReminderId(userId) {
