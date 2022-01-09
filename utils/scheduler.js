@@ -54,10 +54,10 @@ class Scheduler {
           iconURL: message.author.avatarURL(),
         })
         .setColor(process.env.color_blue)
-        .setTitle(
+        .setDescription(
           `On **${reminderTime.format(
             dateFormatString
-          )}** I will remind you **${reminder.message}**`
+          )}** I will remind you: **"${reminder.message}"**`
         )
         .setColor(process.env.color_blue)
         .setTimestamp();
@@ -96,12 +96,20 @@ class Scheduler {
         job.schedule(reminderDate);
         job.save();
 
-        await message.channel.send(
-          `OK **<@${userId}>**, on **${reminderTime.format(
-            dateFormatString
-          )}** I will remind you **${job.attrs.data.reminder}**`
-        );
+        let embed = new Discord.MessageEmbed()
+          .setAuthor({
+            name: message.author.tag,
+            iconURL: message.author.avatarURL(),
+          })
+          .setColor(process.env.color_blue)
+          .setDescription(
+            `On **${reminderTime.format(
+              dateFormatString
+            )}** I will remind you: **"${job.attrs.data.reminder}"**`
+          )
+          .setTimestamp();
 
+        await message.channel.send({ embeds: [embed] });
         log(`reminder snoozed for user ${userId}`);
       });
     };
@@ -124,9 +132,16 @@ class Scheduler {
             await message.channel.send(genericSchedulerErrorMessage);
             return;
           } else if (jobs.length === 0) {
-            await message.channel.send(
-              `You have no reminders to snooze **<@${userId}>**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(`You have no reminders to snooze`)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
             return;
           } else {
             for (let job of jobs) {
@@ -134,9 +149,18 @@ class Scheduler {
               job.save();
             }
 
-            await message.channel.send(
-              `OK **<@${userId}>**, I have snoozed ${jobs.length} active reminders for you`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(
+                `I have snoozed **${jobs.length}** active reminders for you`
+              )
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
           }
 
           log(`snoozeall reminders request processed for user ${userId}`);
@@ -156,9 +180,16 @@ class Scheduler {
             await message.channel.send(genericSchedulerErrorMessage);
             return;
           } else if (jobs.length === 0) {
-            await message.channel.send(
-              `You have no reminders pending **<@${userId}>**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(`You have **no** reminders pending.`)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
             return;
           } else {
             let sb = new StringBuilder();
@@ -180,7 +211,16 @@ class Scheduler {
               sb.appendLine(`\tMessage: **${reminder}**`);
             }
 
-            await message.channel.send(sb.toString());
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(`${sb.toString()}`)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
           }
 
           log(`list reminders request processed for user ${userId}`);
@@ -190,9 +230,16 @@ class Scheduler {
     this.clearActiveReminder = async function (userId, message) {
       let jobId = await getLatestReminderId(userId);
       if (jobId == null) {
-        await message.channel.send(
-          `You have no reminders to remove **<@${userId}>**`
-        );
+        let embed = new Discord.MessageEmbed()
+          .setAuthor({
+            name: message.author.tag,
+            iconURL: message.author.avatarURL(),
+          })
+          .setColor(process.env.color_blue)
+          .setDescription(`You have **no** reminders to remove.`)
+          .setTimestamp();
+
+        await message.channel.send({ embeds: [embed] });
         return;
       }
 
@@ -207,9 +254,18 @@ class Scheduler {
 
         job.remove(async (err) => {
           if (!err) {
-            await message.channel.send(
-              `OK **<@${userId}>**, I have removed your most recent reminder: **${job.attrs.data.reminder}**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(
+                `I have removed your **most recent** reminder: **"${job.attrs.data.reminder}."**`
+              )
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
 
             log(`reminder removed for user ${userId}`);
           } else {
@@ -227,14 +283,24 @@ class Scheduler {
             log(
               `delete all reminders request failed for user ${userId} because: ${err}`
             );
+
             await message.channel.send(
               `I couldn't remove your reminders **<@${userId}>**, please try again later.`
             );
           } else {
             log(`delete all reminders request processed for user ${userId}`);
-            await message.channel.send(
-              `I have removed all ${numRemoved} of your reminders **<@${userId}>**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(
+                `I have removed all **${numRemoved}** of your reminders.`
+              )
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
           }
         }
       );
@@ -256,13 +322,29 @@ class Scheduler {
             );
             return;
           } else if (numRemoved === 0) {
-            await message.channel.send(
-              `You have no reminders to remove **<@${userId}>**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(`You have **no** reminders to remove.`)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
           } else {
-            await message.channel.send(
-              `I have removed all ${numRemoved} of your active reminders **<@${userId}>**`
-            );
+            let embed = new Discord.MessageEmbed()
+              .setAuthor({
+                name: message.author.tag,
+                iconURL: message.author.avatarURL(),
+              })
+              .setColor(process.env.color_blue)
+              .setDescription(
+                `I have removed all **${numRemoved}** of your active reminders.`
+              )
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [embed] });
           }
           log(`delete active reminders request processed for user ${userId}`);
         }
@@ -283,9 +365,16 @@ class Scheduler {
         return;
       }
 
-      await message.channel.send(
-        `Hey **<@${userId}>**, remember **${message}**`
-      );
+      let embed = new Discord.MessageEmbed()
+        .setAuthor({
+          name: "Reminder",
+          iconURL: message.author.avatarURL(),
+        })
+        .setColor(process.env.color_blue)
+        .setDescription(`Hey **<@${userId}>**, remember **"${message}"**.`)
+        .setTimestamp();
+
+      await message.channel.send({ embeds: [embed] });
 
       log("reminder sent to user " + userId);
     };
