@@ -2,7 +2,7 @@
 .history
 
 #dependencies
-node_modules/
+node_modules
 
 #config
 config.json

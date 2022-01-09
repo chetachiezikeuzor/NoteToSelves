@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Scheduler = require("./scheduler");
+const { Scheduler } = require("../utils/scheduler");
 
 let bot = new Discord.Client();
 let scheduler = new Scheduler(bot);
