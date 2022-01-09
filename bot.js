@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const fs = require("fs");
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.mongodbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
