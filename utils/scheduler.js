@@ -1,5 +1,6 @@
 "use strict";
 
+const Discord = require("discord.js");
 const log = require("debug")("scheduler");
 const moment = require("moment");
 const Agenda = require("agenda");
