@@ -12,12 +12,7 @@ const genericSchedulerErrorMessage =
   "Sorry, I couldn't do that at this time. Please try again later.";
 
 const reminderJobName = "send reminder";
-const dateFormatString = "dddd, MMMM Do, YYYY [at] hh:mm:ss A";
-
-const client = new Discord.Client({
-  disableMentions: "everyone",
-  intents: ["GUILDS", "GUILD_MESSAGES"],
-});
+const dateFormatString = "dd, MM Do, YYYY [at] h:m:s a";
 
 class Scheduler {
   constructor(bot) {
