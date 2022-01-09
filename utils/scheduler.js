@@ -29,13 +29,13 @@ class Scheduler {
 
       return rawJob._id;
     };
-    this.setReminder = async function (userId, channel, message) {
-      if (!parser.validReminderString(message)) {
-        await channel.send(genericParserErrorMessage);
+    this.setReminder = async function (userId, message, messageContent) {
+      if (!parser.validReminderString(messageContent)) {
+        await message.channel.send(genericParserErrorMessage);
         return;
       }
 
-      let reminder = parser.getMessageAndDateFromReminderString(message);
+      let reminder = parser.getMessageAndDateFromReminderString(messageContent);
       let reminderTime = moment(reminder.date);
 
       agenda.schedule(reminder.date, reminderJobName, {
@@ -58,13 +58,13 @@ class Scheduler {
         .setTimestamp()
         .setThumbnail(client.user.avatarURL());
 
-      await channel.send({ embeds: [embed] });
+      await message.channel.send({ embeds: [embed] });
 
       log(`reminder set for user ${userId}`);
     };
-    this.snoozeReminder = async function (userId, channel, message) {
-      if (!parser.validSnoozeString(message)) {
-        await channel.send(genericParserErrorMessage);
+    this.snoozeReminder = async function (userId, message, messageContent) {
+      if (!parser.validSnoozeString(messageContent)) {
+        await message.channel.send(genericParserErrorMessage);
         return;
       }
 
@@ -75,7 +75,9 @@ class Scheduler {
       let jobId = await getLatestReminderId(userId);
 
       if (jobId == null) {
-        await channel.send(`You have no reminders to snooze **<@${userId}>**`);
+        await message.channel.send(
+          `You have no reminders to snooze **<@${userId}>**`
+        );
         return;
       }
 
@@ -90,7 +92,7 @@ class Scheduler {
         job.schedule(reminderDate);
         job.save();
 
-        await channel.send(
+        await message.channel.send(
           `OK **<@${userId}>**, on **${reminderTime.format(
             dateFormatString
           )}** I will remind you **${job.attrs.data.reminder}**`
@@ -99,13 +101,13 @@ class Scheduler {
         log(`reminder snoozed for user ${userId}`);
       });
     };
-    this.snoozeReminders = async function (userId, channel, message) {
-      if (!parser.validSnoozeString(message)) {
-        await channel.send(genericParserErrorMessage);
+    this.snoozeReminders = async function (userId, message, messageContent) {
+      if (!parser.validSnoozeString(messageContent)) {
+        await message.channel.send(genericParserErrorMessage);
         return;
       }
 
-      let reminderDate = parser.getDateFromSnoozeString(message);
+      let reminderDate = parser.getDateFromSnoozeString(messageContent);
 
       agenda.jobs(
         {
@@ -115,10 +117,10 @@ class Scheduler {
         },
         async (err, jobs) => {
           if (err) {
-            await channel.send(genericSchedulerErrorMessage);
+            await message.channel.send(genericSchedulerErrorMessage);
             return;
           } else if (jobs.length === 0) {
-            await channel.send(
+            await message.channel.send(
               `You have no reminders to snooze **<@${userId}>**`
             );
             return;
@@ -128,7 +130,7 @@ class Scheduler {
               job.save();
             }
 
-            await channel.send(
+            await message.channel.send(
               `OK **<@${userId}>**, I have snoozed ${jobs.length} active reminders for you`
             );
           }
@@ -137,7 +139,7 @@ class Scheduler {
         }
       );
     };
-    this.listReminders = async function (userId, channel) {
+    this.listReminders = async function (userId, message) {
       agenda.jobs(
         {
           name: reminderJobName,
@@ -147,10 +149,10 @@ class Scheduler {
         async (err, jobs) => {
           if (err) {
             log(`list reminders failed due to error: ${err}`);
-            await channel.send(genericSchedulerErrorMessage);
+            await message.channel.send(genericSchedulerErrorMessage);
             return;
           } else if (jobs.length === 0) {
-            await channel.send(
+            await message.channel.send(
               `You have no reminders pending **<@${userId}>**`
             );
             return;
@@ -174,23 +176,25 @@ class Scheduler {
               sb.appendLine(`\tMessage: **${reminder}**`);
             }
 
-            await channel.send(sb.toString());
+            await message.channel.send(sb.toString());
           }
 
           log(`list reminders request processed for user ${userId}`);
         }
       );
     };
-    this.clearActiveReminder = async function (userId, channel) {
+    this.clearActiveReminder = async function (userId, message) {
       let jobId = await getLatestReminderId(userId);
       if (jobId == null) {
-        await channel.send(`You have no reminders to remove **<@${userId}>**`);
+        await message.channel.send(
+          `You have no reminders to remove **<@${userId}>**`
+        );
         return;
       }
 
       agenda.jobs({ _id: jobId }, async (err, jobs) => {
         if (err) {
-          await channel.send(genericSchedulerErrorMessage);
+          await message.channel.send(genericSchedulerErrorMessage);
           log(`reminder removal failed due to error: ${err}`);
           return;
         }
@@ -199,19 +203,19 @@ class Scheduler {
 
         job.remove(async (err) => {
           if (!err) {
-            await channel.send(
+            await message.channel.send(
               `OK **<@${userId}>**, I have removed your most recent reminder: **${job.attrs.data.reminder}**`
             );
 
             log(`reminder removed for user ${userId}`);
           } else {
             log(`reminder removal failed due to error: ${err}`);
-            await channel.send(genericSchedulerErrorMessage);
+            await message.channel.send(genericSchedulerErrorMessage);
           }
         });
       });
     };
-    this.clearAllReminders = async function (userId, channel) {
+    this.clearAllReminders = async function (userId, message) {
       agenda.cancel(
         { name: reminderJobName, "data.userId": userId },
         async (err, numRemoved) => {
@@ -219,19 +223,19 @@ class Scheduler {
             log(
               `delete all reminders request failed for user ${userId} because: ${err}`
             );
-            await channel.send(
+            await message.channel.send(
               `I couldn't remove your reminders **<@${userId}>**, please try again later.`
             );
           } else {
             log(`delete all reminders request processed for user ${userId}`);
-            await channel.send(
+            await message.channel.send(
               `I have removed all ${numRemoved} of your reminders **<@${userId}>**`
             );
           }
         }
       );
     };
-    this.clearActiveReminders = async function (userId, channel) {
+    this.clearActiveReminders = async function (userId, message) {
       agenda.cancel(
         {
           name: reminderJobName,
@@ -243,16 +247,16 @@ class Scheduler {
             log(
               `delete active reminders request failed for user ${userId} because: ${err}`
             );
-            await channel.send(
+            await message.channel.send(
               `I couldn't remove your reminders **<@${userId}>**, please try again later.`
             );
             return;
           } else if (numRemoved === 0) {
-            await channel.send(
+            await message.channel.send(
               `You have no reminders to remove **<@${userId}>**`
             );
           } else {
-            await channel.send(
+            await message.channel.send(
               `I have removed all ${numRemoved} of your active reminders **<@${userId}>**`
             );
           }
@@ -275,7 +279,9 @@ class Scheduler {
         return;
       }
 
-      await channel.send(`Hey **<@${userId}>**, remember **${message}**`);
+      await message.channel.send(
+        `Hey **<@${userId}>**, remember **${message}**`
+      );
 
       log("reminder sent to user " + userId);
     };
