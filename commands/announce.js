@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const auth = require("./auth.json");
 const Scheduler = require("./scheduler");
 
 let bot = new Discord.Client();

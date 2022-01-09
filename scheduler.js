@@ -6,8 +6,6 @@ const Agenda = require("agenda");
 const StringBuilder = require("string-builder");
 const parser = require("./parser");
 
-const auth = require("./auth.json");
-
 const genericParserErrorMessage = "Sorry, I didn't understand that.";
 const genericSchedulerErrorMessage =
   "Sorry, I couldn't do that at this time. Please try again later.";
@@ -271,7 +269,7 @@ class Scheduler {
       log("reminder sent to user " + userId);
     };
     const agenda = new Agenda({
-      db: { address: auth.mongourl, collection: "agenda" },
+      db: { address: process.env.mongodbUri, collection: "agenda" },
     }).processEvery("one minute");
 
     agenda.on("ready", async function () {
