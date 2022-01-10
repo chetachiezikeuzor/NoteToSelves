@@ -7,27 +7,28 @@ module.exports = {
     .setName("clear")
     .setDescription("Removes all active reminders."),
 
-  run(interaction) {
-    userSchema.findById(interaction.user.id).then(async (u) => {
-      let numReminders;
-      if (u) {
-        numReminders = u.reminders.length;
-        u.reminders = [];
-        u.save();
-      }
+  async execute(interaction) {
+    if (interaction)
+      userSchema.findById(interaction.user.id).then(async (u) => {
+        let numReminders;
+        if (u) {
+          numReminders = u.reminders.length;
+          u.reminders = [];
+          u.save();
+        }
 
-      let embed = new Discord.MessageEmbed()
-        .setAuthor({
-          name: interaction.user.tag,
-          iconURL: interaction.user.avatarURL(),
-        })
-        .setColor(process.env.color_blue)
-        .setDescription(
-          `I have cleared all **${numReminders}** active reminders for you`
-        )
-        .setTimestamp();
+        let embed = new Discord.MessageEmbed()
+          .setAuthor({
+            name: interaction.user.tag,
+            iconURL: interaction.user.avatarURL(),
+          })
+          .setColor(process.env.color_blue)
+          .setDescription(
+            `I have cleared all **${numReminders}** active reminders for you`
+          )
+          .setTimestamp();
 
-      await interaction.reply({ embeds: [embed] });
-    });
+        await interaction.reply({ embeds: [embed] });
+      });
   },
 };
