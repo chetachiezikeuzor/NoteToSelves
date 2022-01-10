@@ -5,7 +5,8 @@ const { Routes } = require("discord-api-types/v9");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
-const Commands = [];
+const Commands = [],
+  data = [];
 const cmdFiles = fs
   .readdirSync("./cmds/")
   .filter((file) => file.endsWith(".js"));
