@@ -73,7 +73,21 @@ exports.run = async (client, message, args) => {
       u.save();
       console.log(u.reminders);
 
-      message.reply({ embeds: [embeds.remindersList(u.reminders, u.offset)] });
+      let embed = new Discord.MessageEmbed()
+        .setAuthor({
+          name: message.author.tag,
+          iconURL: message.author.avatarURL(),
+        })
+        .setColor(process.env.color_blue)
+        .setDescription(
+          `On **${reminderTime.format(
+            dateFormatString
+          )}**,\nI will remind you: **"${reminder.message}"**`
+        )
+        .setColor(process.env.color_blue)
+        .setTimestamp();
+
+      await message.channel.send({ embeds: [embed] });
     }
   });
 };
