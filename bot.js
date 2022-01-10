@@ -19,6 +19,7 @@ const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES"],
 });
 client.config = config.content;
+client.commands = new Discord.Collection();
 
 mongoose.connect(process.env.mongodbUri, {
   useNewUrlParser: true,
