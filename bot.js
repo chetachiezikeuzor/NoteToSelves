@@ -1,13 +1,14 @@
 require("dotenv").config();
 const fs = require("fs");
-const { readdirSync } = require("fs");
 const mongoose = require("mongoose");
 const { APIMessage } = require("discord.js");
 
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const Commands = [];
-const cmdFiles = readdirSync("./comds/").filter((file) => file.endsWith(".js"));
+const cmdFiles = fs
+  .readdirSync("./comds/")
+  .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Discord.Client({
