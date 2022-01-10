@@ -1,38 +1,7 @@
 const Discord = require("discord.js");
 const userSchema = require("../models/user");
-const timeZonesList = [
-  "UTC",
-  "Asia/Tokyo",
-  "Japan",
-  "EST",
-  "Asia/Manila",
-  "America/New_York",
-  "Europe/Berlin",
-  "America/Los_Angeles",
-  "Asia/Kolkata",
-  "Asia/Jakarta",
-  "US/Eastern",
-  "CET",
-  "Singapore",
-  "Europe/Paris",
-  "America/Sao_Paulo",
-  "Europe/London",
-  "US/Central",
-  "US/Pacific",
-  "Europe/Moscow",
-  "America/Chicago",
-  "GMT",
-];
-
-function getTimezoneOffset(timeZone) {
-  const now = new Date();
-  const tzString = now.toLocaleString("en-US", { timeZone });
-  const localString = now.toLocaleString("en-US");
-  const diff = (Date.parse(localString) - Date.parse(tzString)) / 3600000;
-  const offset = diff + now.getTimezoneOffset() / 60;
-
-  return -offset;
-}
+const { timeZonesList } = require("../utils/constants");
+const { getTimezoneOffset } = require("../utils/functions");
 
 exports.run = async (client, message, args) => {
   let embed = new Discord.MessageEmbed()
@@ -45,7 +14,7 @@ exports.run = async (client, message, args) => {
     .setTimestamp();
 
   timeZonesList.forEach((timeZone) => {
-    embed.addField(`${timeZone}`, `🕝 ${getTimezoneOffset(timeZone)}`, true);
+    embed.addField(`${timeZone}`, `🕓 ${getTimezoneOffset(timeZone)}`, true);
   });
   userSchema.findById(message.author.id).then((u) => {
     if (!u) {
