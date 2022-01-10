@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
-  userSchema.findById(user.id).then((u) => {
+  userSchema.findById(user.id).then(async (u) => {
     let numReminders;
     if (u) {
       numReminders = u.reminders.length;
