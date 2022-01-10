@@ -2,7 +2,10 @@ const moment = require("moment");
 const parser = require("../utils/parser");
 const Discord = require("discord.js");
 const embeds = require("../embeds");
-const { genericParserErrorMessage } = require("../utils/constants");
+const {
+  genericParserErrorMessage,
+  dateFormatString,
+} = require("../utils/constants");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
@@ -93,8 +96,8 @@ exports.run = async (client, message, args) => {
 };
 
 exports.help = {
-  name: "noteto",
+  name: "note",
   description: "Sets a reminder to ping at a specific time.",
   cooldown: "5",
-  usage: "noteto <id>",
+  usage: "note <id>",
 };
