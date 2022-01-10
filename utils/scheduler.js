@@ -46,7 +46,7 @@ class Scheduler {
       let embed = new Discord.MessageEmbed()
         .setAuthor({
           name: message.author.tag,
-          iconURL: message.author.avatarURL(),
+          iconURL: "https://i.imgur.com/qLS6esg.png",
         })
         .setColor(process.env.color_blue)
         .setDescription(

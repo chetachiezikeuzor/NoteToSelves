@@ -75,8 +75,8 @@ exports.run = async (client, message, args) => {
 
       let embed = new Discord.MessageEmbed()
         .setAuthor({
-          name: message.author.tag,
-          iconURL: message.author.avatarURL(),
+          name: `Hey ${message.author.tag},`,
+          iconURL: "https://i.imgur.com/qLS6esg.png",
         })
         .setColor(process.env.color_blue)
         .setDescription(
