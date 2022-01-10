@@ -6,6 +6,7 @@ const { genericParserErrorMessage } = require("../utils/constants");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
+  let messageContent = message.content.substring(1);
   let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
   userSchema.findById(message.author.id).then(async (u) => {
     if (!u) {
