@@ -44,8 +44,8 @@ exports.run = async (client, message, args) => {
       let reminder = parser.getMessageAndDateFromReminderString(parameters);
       let reminderTime = moment(reminder.date);
       const reminderItem = {
-        date: reminderTime,
-        msg: msg,
+        date: reminder.date,
+        msg: reminder.message,
       };
 
       if (reminder.date <= new Date().getTime()) {
