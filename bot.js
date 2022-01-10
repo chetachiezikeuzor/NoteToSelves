@@ -2,6 +2,9 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
+const commandFiles = fs.readdirSync("./commands");
+const commands = [],
+  data = [];
 const fs = require("fs");
 
 mongoose.connect(process.env.mongodbUri, {
@@ -25,6 +28,18 @@ const client = new Discord.Client({
 const config = require("./config.js");
 
 client.config = config.content;
+
+client.on("interaction", (interaction) => {
+  if (!interaction.isCommand()) return;
+  for (const command of commands) {
+    if (interaction.commandName === command.data.name) {
+      console.log(
+        `${interaction.user.username} ran command ${command.data.name}.`
+      );
+      command.run(interaction);
+    }
+  }
+});
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
