@@ -63,11 +63,11 @@ exports.remindersList = (reminders, offset) => {
       embed
         .addField(
           "Date",
-          dateStr(reminder.date + offset * 60 * 60 * 1000),
+          `${dateStr(reminder.date + offset * 60 * 60 * 1000)}`,
           true
         )
         .addField("Message", `${reminder.msg}`, true)
-        .addField("ID", idx, true);
+        .addField("ID", `${idx}`, true);
     });
   return embed;
 };
