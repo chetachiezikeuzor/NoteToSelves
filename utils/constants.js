@@ -22,6 +22,9 @@ const timeZonesList = [
   "GMT",
 ];
 
+const dateFormatString = "ddd, MMM Do, YYYY [at] hh:mm:ss a";
+
 module.exports = {
   timeZonesList: timeZonesList,
+  dateFormatString: dateFormatString,
 };
