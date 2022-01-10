@@ -11,11 +11,11 @@ module.exports = {
     if (interaction)
       userSchema.findById(user.id).then(async (u) => {
         if (!u) {
-          await interaction.reply({ embed: [embeds.noReminders()] });
+          await interaction.reply({ embeds: [embeds.noReminders()] });
         } else {
           console.log(u.reminders);
           if (u.reminders.length == 0)
-            await interaction.reply({ embed: [embeds.noReminders()] });
+            await interaction.reply({ embeds: [embeds.noReminders()] });
           else
             await interaction.reply({
               embeds: [embeds.remindersList(u.reminders, u.offset)],
