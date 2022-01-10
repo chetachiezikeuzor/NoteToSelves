@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const Commands = [];
-const cmdFiles = fs.readdir("./cmds/").filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Discord.Client({
