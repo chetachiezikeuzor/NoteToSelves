@@ -41,7 +41,16 @@ exports.run = async (client, message, args) => {
       await message.channel.send({ embeds: [embed] });
       return;
     } else {
-      u.reminders.slice(-1)[0].date = reminderDate;
+      remind = u.reminders.slice(-1)[0];
+
+      const reminderItem = {
+        date: reminder.reminderDate,
+        msg: remind.message,
+      };
+
+      u.reminders.splice(-1, 1, reminderItem);
+      console.log(reminderItem);
+
       u.save();
       console.log(u.reminders);
 
