@@ -8,7 +8,11 @@ module.exports = (client) => {
   );
   console.log(`Logged in as ${client.user.tag} (ID: ${client.user.id})\n`);
   client.user.setStatus("available");
-  client.user.setActivity(process.env.activityMessage, {
-    type: process.env.activityType,
+  client.user.setPresence({
+    status: "online",
+    game: {
+      name: process.env.activityMessage,
+      type: process.env.activityType,
+    },
   });
 };
