@@ -12,9 +12,7 @@ const cleanSnoozeString = (snoozeString) => {
   return snoozeString;
 };
 module.exports.validReminderString = (reminderString) => {
-  let parsedDate = chrono.parse(reminderString, new Date(), {
-    forwardDate: true,
-  })[0];
+  let parsedDate = chrono.parse(reminderString, new Date(), {})[0];
 
   if (parsedDate == undefined) {
     return false;
@@ -41,9 +39,7 @@ module.exports.getMessageAndDateFromReminderString = (reminderString) => {
     throw new Error("Invalid reminder string!");
   }
 
-  let parsedDate = chrono.parse(reminderString, new Date(), {
-    forwardDate: true,
-  })[0];
+  let parsedDate = chrono.parse(reminderString, new Date(), {})[0];
 
   let message = reminderString.replace(parsedDate.text, "").trim();
 
@@ -54,9 +50,7 @@ module.exports.getMessageAndDateFromReminderString = (reminderString) => {
 module.exports.validSnoozeString = (snoozeString) => {
   snoozeString = cleanSnoozeString(snoozeString);
 
-  let parsedDate = chrono.parse(snoozeString, new Date(), {
-    forwardDate: true,
-  })[0];
+  let parsedDate = chrono.parse(snoozeString, new Date(), {})[0];
 
   if (parsedDate == undefined) {
     return false;
@@ -75,9 +69,11 @@ module.exports.getDateFromSnoozeString = (snoozeString) => {
     throw new Error("Invalid snooze string!");
   }
 
-  let parsedDate = chrono.parse(cleanSnoozeString(snoozeString), new Date(), {
-    forwardDate: true,
-  })[0];
+  let parsedDate = chrono.parse(
+    cleanSnoozeString(snoozeString),
+    new Date(),
+    {}
+  )[0];
 
   let date = parsedDate.start.date();
 
