@@ -3,8 +3,6 @@ const embeds = require("../embeds");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
-  const { options, user } = interaction;
-  const args = options.map((option) => option.value);
   const offset = parseInt(args[0]);
   if (isNaN(offset) || offset < -11 || offset > 14) {
     await message.channel.send({
@@ -23,10 +21,10 @@ exports.run = async (client, message, args) => {
     });
     return;
   }
-  userSchema.findById(user.id).then((u) => {
+  userSchema.findById(message.author.id).then((u) => {
     if (!u) {
       new userSchema({
-        _id: user.id,
+        _id: message.author.id,
         reminders: [],
         offset: offset,
       }).save();

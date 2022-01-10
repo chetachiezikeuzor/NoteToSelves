@@ -20,7 +20,6 @@ exports.run = async (client, message, args) => {
         ],
       });
     } else {
-      //check each argument against these strings to be more accurate
       const v = args[1].substring(args[1].length - 2).toUpperCase();
       const time = args[1].substring(0, args[1].length - 2).split(":");
       if (time.length !== 2 || (v !== "AM" && v !== "PM")) {
@@ -41,7 +40,6 @@ exports.run = async (client, message, args) => {
         return;
       }
 
-      //convert currentTime to local user time: +offset
       const userNow = new Date();
       userNow.setTime(userNow.getTime() + u.offset * 60 * 60 * 1000);
       let date = [
@@ -73,7 +71,6 @@ exports.run = async (client, message, args) => {
         }
       }
       const msg = args[0];
-      //completely parse everything here to make sure there's no errors (note that if the array value doesn't exist, one will automatically be created)
       time[0] = parseInt(time[0]);
       time[1] = parseInt(time[1]);
       date[0] = parseInt(date[0]);
@@ -167,7 +164,6 @@ exports.run = async (client, message, args) => {
         return;
       }
 
-      //local user time to utc: -offset
       let dateValue =
         new Date(date[2], date[0] - 1, date[1], time[0], time[1]).getTime() -
         u.offset * 60 * 60 * 1000;
