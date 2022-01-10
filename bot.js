@@ -5,6 +5,7 @@ const { Routes } = require("discord-api-types/v9");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
+const { Client, Collection, Intents } = require("discord.js");
 const Commands = [],
   data = [];
 const commandFiles = fs
@@ -14,10 +15,7 @@ const config = require("./config.js");
 const clientId = `${process.env.clientId}`;
 const guildId = `${process.env.guildId}`;
 const connection = mongoose.connection;
-const client = new Discord.Client({
-  disableMentions: "everyone",
-  intents: ["GUILDS", "GUILD_MESSAGES"],
-});
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.config = config.content;
 client.commands = new Discord.Collection();
 
