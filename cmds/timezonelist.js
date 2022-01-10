@@ -1,125 +1,41 @@
-const moment = require("moment");
-const parser = require("../utils/parser");
-const embeds = require("../embeds");
-const Discord = require("discord.js");
-const {
-  genericParserErrorMessage,
-  dateFormatString,
-} = require("../utils/constants");
 const userSchema = require("../models/user");
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const Discord = require("discord.js");
+const { timeZonesList } = require("../utils/constants");
+const { getTimezoneOffset } = require("../utils/functions");
 
 module.exports = {
-  data: {
-    name: "note",
-    description: "Sets a reminder to ping at a specific time.",
-    options: [
-      {
-        name: "message",
-        type: "STRING",
-        description: "The message you will get pinged with.",
-        required: true,
-      },
-      {
-        name: "time",
-        type: "STRING",
-        description: "The time by which you'd like to be reminded.",
-        required: true,
-      },
-    ],
-  },
-  run(interaction) {
-    const { options, user } = interaction;
+  data: new SlashCommandBuilder()
+    .setName("timezonelist")
+    .setDescription("Lists most popular timezones."),
 
-    //const args = options.map(option => option.value);
-    console.log(options);
+  async execute(interaction) {
     if (interaction)
-      userSchema.findById(user.id).then(async (u) => {
-        let messageContent = options.substring(1);
-        let parameters = messageContent.substring(
-          messageContent.indexOf(" ") + 1
-        );
+    let embed = new Discord.MessageEmbed()
+    .setColor(process.env.color_gray)
+    .setTitle("Timezone Usage")
+    .setDescription(
+      `**Usage:**\n\`n!timezone <number>\`\n\n**Example:**\n\`n!timezone -4\`
+    \n You can use one of the popular timezones below, otherwise click [here](https://gist.github.com/JellyWX/913dfc8b63d45192ad6cb54c829324ee)`
+    )
+    .setTimestamp();
+
+    timeZonesList.forEach((timeZone) => {
+        embed.addField(`${timeZone}`, `🕓 ${getTimezoneOffset(timeZone)}`, true);
+    });
+
+    userSchema.findById(interaction.user.id).then((u) => {
         if (!u) {
-          await interaction.reply({
-            embeds: [
-              new Discord.MessageEmbed()
-                .setAuthor({
-                  name: "An error occured!",
-                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                })
-                .setDescription(
-                  "Use `n!timezone` to set your time zone before you can add reminders."
-                )
-                .setColor(process.env.color_red)
-                .setTimestamp(),
-            ],
-          });
+        return;
         } else {
-          if (!parser.validReminderString(parameters)) {
-            await interaction.reply({
-              embeds: [
-                new Discord.MessageEmbed()
-                  .setAuthor({
-                    name: "An error occured!",
-                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                  })
-                  .setDescription(genericParserErrorMessage)
-                  .setColor(process.env.color_red)
-                  .setTimestamp(),
-              ],
-            });
-            return;
-          }
-
-          let reminder = parser.getMessageAndDateFromReminderString(parameters);
-          let reminderTime = moment(reminder.date);
-          const reminderItem = {
-            date: reminder.date,
-            msg: reminder.message,
-          };
-
-          if (reminder.date <= new Date().getTime()) {
-            await interaction.reply({
-              embeds: [
-                new Discord.MessageEmbed()
-                  .setAuthor({
-                    name: "An error occured!",
-                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                  })
-                  .setDescription(
-                    "The time for this reminder has already passed."
-                  )
-                  .setColor(process.env.color_red)
-                  .setTimestamp(),
-              ],
-            });
-            return;
-          }
-
-          u.reminders.push(reminderItem);
-          for (let i = u.reminders.length - 2; i >= 0; i--) {
-            if (u.reminders[i].date > u.reminders[i + 1].date)
-              [u.reminders[i], u.reminders[i + 1]],
-                [u.reminders[i + 1], u.reminders[i]];
-          }
-          u.save();
-          console.log(u.reminders);
-
-          let embed = new Discord.MessageEmbed()
-            .setAuthor({
-              name: `Hey ${user.tag},`,
-              iconURL: "https://i.imgur.com/qLS6esg.png",
-            })
-            .setColor(process.env.color_blue)
-            .setDescription(
-              `On **${reminderTime.format(
-                dateFormatString
-              )}**,\nI will remind you: **"${reminder.message}"**`
-            )
-            .setColor(process.env.color_blue)
-            .setTimestamp();
-
-          await interaction.reply({ embeds: [embed] });
+        embed.setFooter({
+            text: `${u.offset}`,
+        });
         }
-      });
+    });
+
+    await interaction.reply({
+        embeds: [embed],
+    });
   },
 };

@@ -8,7 +8,7 @@ const userSchema = require("./models/user");
 const { Client, Collection, Intents } = require("discord.js");
 const commands = [];
 const commandFiles = fs
-  .readdirSync("./coms/")
+  .readdirSync("./cmds/")
   .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
@@ -34,7 +34,7 @@ client.once("ready", () => {
 });
 
 for (const file of commandFiles) {
-  const command = require(`./coms/${file}`);
+  const command = require(`./cmds/${file}`);
   commands.push(command.data.toJSON());
   client.commands.set(command.data.name, command);
 }

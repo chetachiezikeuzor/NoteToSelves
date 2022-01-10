@@ -1,43 +1,38 @@
 const moment = require("moment");
 const parser = require("../utils/parser");
-const embeds = require("../embeds");
 const Discord = require("discord.js");
 const {
   genericParserErrorMessage,
   dateFormatString,
 } = require("../utils/constants");
 const userSchema = require("../models/user");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  data: {
-    name: "note",
-    description: "Sets a reminder to ping at a specific time.",
-    options: [
-      {
-        name: "message",
-        type: "STRING",
-        description: "The message you will get pinged with.",
-        required: true,
-      },
-      {
-        name: "time",
-        type: "STRING",
-        description: "The time by which you'd like to be reminded.",
-        required: true,
-      },
-    ],
-  },
-  run(interaction) {
-    const { options, user } = interaction;
+  data: new SlashCommandBuilder()
+    .setName("note")
+    .setDescription("Sets a reminder to ping at a specific time.")
+    .addStringOption((option) =>
+      option
+        .setName("message")
+        .setDescription("The message you will get pinged with.")
+        .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("time")
+        .setDescription("The time by which you'd like to be reminded.")
+        .setRequired(true)
+    ),
 
-    //const args = options.map(option => option.value);
-    console.log(options);
+  async execute(interaction) {
     if (interaction)
-      userSchema.findById(user.id).then(async (u) => {
-        let messageContent = options.substring(1);
-        let parameters = messageContent.substring(
-          messageContent.indexOf(" ") + 1
-        );
+      userSchema.findById(interaction.user.id).then(async (u) => {
+        const parameters = `${interaction.options.getString(
+          "message"
+        )} ${interaction.options.getString("time")}`;
+        console.log(parameters);
+
         if (!u) {
           await interaction.reply({
             embeds: [
@@ -106,7 +101,7 @@ module.exports = {
 
           let embed = new Discord.MessageEmbed()
             .setAuthor({
-              name: `Hey ${user.tag},`,
+              name: `Hey ${interaction.user.tag},`,
               iconURL: "https://i.imgur.com/qLS6esg.png",
             })
             .setColor(process.env.color_blue)

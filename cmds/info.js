@@ -1,125 +1,51 @@
-const moment = require("moment");
-const parser = require("../utils/parser");
-const embeds = require("../embeds");
+require("dotenv").config();
 const Discord = require("discord.js");
-const {
-  genericParserErrorMessage,
-  dateFormatString,
-} = require("../utils/constants");
-const userSchema = require("../models/user");
+const fs = require("fs");
+const { SlashCommandBuilder } = require("@discordjs/builders");
+let packageFile = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+const { Client, Collection, Intents } = require("discord.js");
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+client.commands = new Discord.Collection();
 
 module.exports = {
-  data: {
-    name: "note",
-    description: "Sets a reminder to ping at a specific time.",
-    options: [
-      {
-        name: "message",
-        type: "STRING",
-        description: "The message you will get pinged with.",
-        required: true,
-      },
-      {
-        name: "time",
-        type: "STRING",
-        description: "The time by which you'd like to be reminded.",
-        required: true,
-      },
-    ],
-  },
-  run(interaction) {
-    const { options, user } = interaction;
+  data: new SlashCommandBuilder()
+    .setName("info")
+    .setDescription("Get information about the bot."),
 
-    //const args = options.map(option => option.value);
-    console.log(options);
-    if (interaction)
-      userSchema.findById(user.id).then(async (u) => {
-        let messageContent = options.substring(1);
-        let parameters = messageContent.substring(
-          messageContent.indexOf(" ") + 1
-        );
-        if (!u) {
-          await interaction.reply({
-            embeds: [
-              new Discord.MessageEmbed()
-                .setAuthor({
-                  name: "An error occured!",
-                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                })
-                .setDescription(
-                  "Use `n!timezone` to set your time zone before you can add reminders."
-                )
-                .setColor(process.env.color_red)
-                .setTimestamp(),
-            ],
-          });
-        } else {
-          if (!parser.validReminderString(parameters)) {
-            await interaction.reply({
-              embeds: [
-                new Discord.MessageEmbed()
-                  .setAuthor({
-                    name: "An error occured!",
-                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                  })
-                  .setDescription(genericParserErrorMessage)
-                  .setColor(process.env.color_red)
-                  .setTimestamp(),
-              ],
-            });
-            return;
-          }
+  async execute(interaction) {
+    let botping = new Date() - interaction.createdAt;
 
-          let reminder = parser.getMessageAndDateFromReminderString(parameters);
-          let reminderTime = moment(reminder.date);
-          const reminderItem = {
-            date: reminder.date,
-            msg: reminder.message,
-          };
+    let totalSeconds = process.uptime();
+    let realTotalSecs = Math.floor(totalSeconds % 60);
+    let days = Math.floor((totalSeconds % 31536000) / 86400);
+    let hours = Math.floor((totalSeconds / 3600) % 24);
+    let mins = Math.floor((totalSeconds / 60) % 60);
+    let used = process.memoryUsage().heapUsed / 1024 / 1024;
 
-          if (reminder.date <= new Date().getTime()) {
-            await interaction.reply({
-              embeds: [
-                new Discord.MessageEmbed()
-                  .setAuthor({
-                    name: "An error occured!",
-                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                  })
-                  .setDescription(
-                    "The time for this reminder has already passed."
-                  )
-                  .setColor(process.env.color_red)
-                  .setTimestamp(),
-              ],
-            });
-            return;
-          }
+    const cmdArr = [...client.commands].map(([name, value]) => ({
+      name,
+      value,
+    }));
 
-          u.reminders.push(reminderItem);
-          for (let i = u.reminders.length - 2; i >= 0; i--) {
-            if (u.reminders[i].date > u.reminders[i + 1].date)
-              [u.reminders[i], u.reminders[i + 1]],
-                [u.reminders[i + 1], u.reminders[i]];
-          }
-          u.save();
-          console.log(u.reminders);
+    let embed = new Discord.MessageEmbed()
+      .setTitle("Information")
+      .setColor(process.env.color_blue)
+      .setTimestamp()
+      .setThumbnail(interaction.client.user.avatarURL())
+      .setDescription(
+        `Creator - \`Chetachi ❤️\`\nPrefix - \`${
+          process.env.prefix
+        }\`\nVersion - \`v${packageFile.version}\`\nCommands - \`${
+          cmdArr.length - 1
+        }\`\nGuilds - \`${client.guilds.cache.size}\`\nChannels - \`${
+          client.channels.cache.size
+        }\`\nUsers - \`${
+          client.users.cache.size
+        }\`\nUptime - \`${days}d ${hours}h ${mins}m ${realTotalSecs}s\`\nMemory Usage - \`${
+          Math.round(used * 100) / 100
+        }MB\`\nAPI Ping - \`${Math.floor(client.ws.ping)}ms\`\n`
+      );
 
-          let embed = new Discord.MessageEmbed()
-            .setAuthor({
-              name: `Hey ${user.tag},`,
-              iconURL: "https://i.imgur.com/qLS6esg.png",
-            })
-            .setColor(process.env.color_blue)
-            .setDescription(
-              `On **${reminderTime.format(
-                dateFormatString
-              )}**,\nI will remind you: **"${reminder.message}"**`
-            )
-            .setColor(process.env.color_blue)
-            .setTimestamp();
-
-          await interaction.reply({ embeds: [embed] });
-        }
-      });
+    interaction.reply({ embeds: [embed] });
   },
 };

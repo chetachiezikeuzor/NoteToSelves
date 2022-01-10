@@ -1,15 +1,15 @@
-const userSchema = require("../models/user");
 const embeds = require("../embeds");
+const userSchema = require("../models/user");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
-  data: {
-    name: "list",
-    description: "Lists all active reminders.",
-  },
-  run(interaction) {
-    const { options, user } = interaction;
+  data: new SlashCommandBuilder()
+    .setName("list")
+    .setDescription("Lists all active reminders."),
+
+  async execute(interaction) {
     if (interaction)
-      userSchema.findById(user.id).then(async (u) => {
+      userSchema.findById(interaction.user.id).then(async (u) => {
         if (!u) {
           await interaction.reply({ embeds: [embeds.noReminders()] });
         } else {
