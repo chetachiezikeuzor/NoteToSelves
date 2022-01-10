@@ -1,20 +1,21 @@
 const userSchema = require("../models/user");
 const embeds = require("../embeds");
+const { SlashCommandBuilder } = require("@discordjs/builders");
+
+const data = new SlashCommandBuilder()
+  .setName("timezone")
+  .setDescription("Sets your current time zone offset from UTC (in hours).")
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("offset")
+      .setRequired(true)
+      .setDescription(
+        "The difference between your local time and UTC (in hours)."
+      )
+  );
 
 module.exports = {
-  data: {
-    name: "timezone",
-    description: "Sets your current time zone offset from UTC (in hours).",
-    options: [
-      {
-        name: "offset",
-        type: "INTEGER",
-        description:
-          "The difference between your local time and UTC (in hours).",
-        required: true,
-      },
-    ],
-  },
+  data: { data },
   run(interaction) {
     const { options, user } = interaction;
     const args = options.map((option) => option.value);

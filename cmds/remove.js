@@ -1,19 +1,19 @@
 const userSchema = require("../models/user");
 const embeds = require("../embeds");
+const { SlashCommandBuilder } = require("@discordjs/builders");
+
+const data = new SlashCommandBuilder()
+  .setName("remove")
+  .setDescription("Removes a specific reminder by ID.")
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("index")
+      .setRequired(true)
+      .setDescription("The position of the reminder in the list to delete")
+  );
 
 module.exports = {
-  data: {
-    name: "remove",
-    description: "Removes a specific reminder by ID.",
-    options: [
-      {
-        name: "index",
-        type: "INTEGER",
-        description: "The position of the reminder in the list to delete",
-        required: true,
-      },
-    ],
-  },
+  data: { data },
   run(interaction) {
     const { options, user } = interaction;
     const args = options.map((option) => option.value);

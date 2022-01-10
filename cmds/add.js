@@ -1,32 +1,25 @@
 const userSchema = require("../models/user");
 const embeds = require("../embeds");
 
+const data = new SlashCommandBuilder()
+  .setName("add")
+  .setDescription("Sets a reminder to ping you at a specific time.")
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("message")
+      .setRequired(true)
+      .setDescription("The message you will get pinged with.")
+  )
+
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName("time")
+      .setRequired(true)
+      .setDescription("The time at which you'd like to be reminded.")
+  );
+
 module.exports = {
-  data: {
-    name: "add",
-    description: "Sets a reminder to ping you at a specific time.",
-    options: [
-      {
-        name: "message",
-        type: "STRING",
-        description: "The message you will get pinged with.",
-        required: true,
-      },
-      {
-        name: "time",
-        type: "STRING",
-        description: "<hour:minute><am|pm>",
-        required: true,
-      },
-      {
-        name: "date",
-        type: "STRING",
-        description:
-          "<month/day/year> (leave blank to use today, or leave year blank to use current year)",
-        required: false,
-      },
-    ],
-  },
+  data: { data },
   run(interaction) {
     const { options, user } = interaction;
     const args = options.map((option) => option.value);
