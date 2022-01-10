@@ -5,7 +5,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const data = new SlashCommandBuilder()
   .setName("remove")
   .setDescription("Removes a specific reminder by ID.")
-  .addSubcommand((subcommand) =>
+  .addStringOption((subcommand) =>
     subcommand
       .setName("index")
       .setRequired(true)

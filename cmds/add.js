@@ -5,14 +5,14 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const data = new SlashCommandBuilder()
   .setName("add")
   .setDescription("Sets a reminder to ping you at a specific time.")
-  .addSubcommand((subcommand) =>
+  .addStringOption((subcommand) =>
     subcommand
       .setName("message")
       .setRequired(true)
       .setDescription("The message you will get pinged with.")
   )
 
-  .addSubcommand((subcommand) =>
+  .addStringOption((subcommand) =>
     subcommand
       .setName("time")
       .setRequired(true)

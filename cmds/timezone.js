@@ -5,7 +5,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const data = new SlashCommandBuilder()
   .setName("timezone")
   .setDescription("Sets your current time zone offset from UTC (in hours).")
-  .addSubcommand((subcommand) =>
+  .addStringOption((subcommand) =>
     subcommand
       .setName("offset")
       .setRequired(true)
