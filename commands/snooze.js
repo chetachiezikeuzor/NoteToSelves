@@ -41,9 +41,9 @@ exports.run = async (client, message, args) => {
       await message.channel.send({ embeds: [embed] });
       return;
     } else {
-      remind = u.reminders.slice(-1)[0];
-      remind.date = reminderDate;
+      u.reminders.slice(-1)[0].date = reminderDate;
       u.save();
+      console.log(u.reminders);
 
       let embed = new Discord.MessageEmbed()
         .setAuthor({
