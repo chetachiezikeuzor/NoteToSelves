@@ -1,16 +1,17 @@
 require("dotenv").config();
 const Discord = require("discord.js");
 const fs = require("fs");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 let packageFile = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 const { Client, Collection, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Discord.Collection();
 
 module.exports = {
-  data: {
-    name: "info",
-    description: "Get information about the bot.",
-  },
+  data: new SlashCommandBuilder()
+    .setName("info")
+    .setDescription("Get information about the bot."),
+
   async execute(interaction) {
     let botping = new Date() - interaction.createdAt;
 
