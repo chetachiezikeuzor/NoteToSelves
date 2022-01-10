@@ -5,7 +5,7 @@ exports.helpEmbed = (commands) => {
     .setTitle("Commands List")
     .setColor(process.env.color_blue);
   for (const command of commands)
-    embed.addField({ name: command.title, value: command.description });
+    embed.addField(command.title, command.description);
   embed.setFooter({ text: "by Chetachi ❤️" }).setTimestamp();
   return embed;
 };
@@ -28,8 +28,8 @@ exports.addReminder = (reminder) => {
   const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_green)
     .setTitle("Reminder Set Successfully");
-  embed.addField({ name: "Message", value: reminder.msg });
-  embed.addField({ name: "Date", value: reminder.dateStr });
+  embed.addField("Message", reminder.msg, true);
+  embed.addField("Date", reminder.dateStr, true);
   return embed;
 };
 
@@ -62,12 +62,13 @@ exports.remindersList = (reminders, offset) => {
   else
     reminders.forEach((reminder, idx) => {
       embed
-        .addField({
-          name: "Date",
-          value: `${dateStr(reminder.date + offset * 60 * 60 * 1000)}`,
-        })
-        .addField({ name: "Message", value: `${reminder.msg}` })
-        .addField({ name: "ID", value: `${idx}` });
+        .addField(
+          "Date",
+          `${dateStr(reminder.date + offset * 60 * 60 * 1000)}`,
+          true
+        )
+        .addField("Message", `${reminder.msg}`, true)
+        .addField("ID", `${idx}`, true);
     });
   return embed;
 };
