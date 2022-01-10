@@ -36,7 +36,7 @@ module.exports = {
       userSchema.findById(interaction.user.id).then(async (u) => {
         if (!u) {
           new userSchema({
-            userID: interaction.user.id,
+            _id: interaction.user.id,
             reminders: [],
             offset: offset,
           }).save();

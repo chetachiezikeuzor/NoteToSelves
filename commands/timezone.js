@@ -23,7 +23,7 @@ exports.run = async (client, message, args) => {
   userSchema.findById(message.author.id).then(async (u) => {
     if (!u) {
       new userSchema({
-        userID: message.author.id,
+        _id: message.author.id,
         reminders: [],
         offset: offset,
       }).save();

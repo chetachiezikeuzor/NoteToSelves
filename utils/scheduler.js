@@ -27,7 +27,7 @@ class Scheduler {
         return null;
       }
 
-      return rawJob.userID;
+      return rawJob._id;
     };
     this.setReminder = async function (userId, message, messageContent) {
       if (!parser.validReminderString(messageContent)) {
@@ -89,7 +89,7 @@ class Scheduler {
         return;
       }
 
-      agenda.jobs({ userID: jobId }, async (err, jobs) => {
+      agenda.jobs({ _id: jobId }, async (err, jobs) => {
         if (err) {
           log(`reminder snooze failed due to error: ${err}`);
           return;
@@ -265,7 +265,7 @@ class Scheduler {
         return;
       }
 
-      agenda.jobs({ userID: jobId }, async (err, jobs) => {
+      agenda.jobs({ _id: jobId }, async (err, jobs) => {
         if (err) {
           let error = new Discord.MessageEmbed()
             .setAuthor({

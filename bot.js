@@ -115,7 +115,7 @@ function step() {
         for (let i = 0; i < user.reminders.length; i++) {
           if (user.reminders[i].date <= now.getTime()) {
             let m = user.reminders[i].msg;
-            client.users.fetch(user.userID).then((u) => {
+            client.users.fetch(user._id).then((u) => {
               u.send(`<@${u.id}> ${m}`);
               console.log(u.username + ' was sent the reminder "' + m + '"');
             });
