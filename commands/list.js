@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
       message.reply(embeds.noReminders());
     } else {
       console.log(u.reminders);
-      if (u.reminders.length == 0) interaction.reply(embeds.noReminders());
+      if (u.reminders.length == 0) message.reply(embeds.noReminders());
       else message.reply(embeds.remindersList(u.reminders, u.offset));
     }
   });
