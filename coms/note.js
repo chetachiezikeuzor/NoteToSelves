@@ -29,7 +29,6 @@ module.exports = {
       userSchema.findById(interaction.user.id).then(async (u) => {
         const parameters =
           interaction.options.getString("message") +
-          "" +
           interaction.options.getString("time");
         if (!u) {
           await interaction.reply({
