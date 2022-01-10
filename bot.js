@@ -46,7 +46,7 @@ client.on("messageCreate", async (message) => {
     message.content.toLowerCase() === "!deploy" &&
     message.author.id === client.application.owner.id
   ) {
-    await client.application.commands.create(data);
+    await client.application.commands.create(data.help.name, data);
     message.channel.send("Created slash commands.");
   }
 });

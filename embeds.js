@@ -21,7 +21,7 @@ exports.error = (msg) => {
   return new Discord.MessageEmbed()
     .setColor(process.env.color_red)
     .setTitle("Error")
-    .setDescription(msg);
+    .setDescription(`${msg}`);
 };
 
 exports.addReminder = (reminder) => {
@@ -60,13 +60,14 @@ exports.remindersList = (reminders, offset) => {
     embed.setDescription("There are no active reminders.");
   else
     reminders.forEach((reminder, idx) => {
-      embed.addField(
-        "Date",
-        dateStr(reminder.date + offset * 60 * 60 * 1000),
-        true
-      );
-      embed.addField("Message", `${reminder.msg}`, true);
-      embed.addField("ID", idx, true);
+      embed
+        .addField(
+          "Date",
+          dateStr(reminder.date + offset * 60 * 60 * 1000),
+          true
+        )
+        .addField("Message", `${reminder.msg}`, true)
+        .addField("ID", idx, true);
     });
   return embed;
 };
