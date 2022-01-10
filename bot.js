@@ -71,7 +71,7 @@ fs.readdir("./commands/", (err, files) => {
   console.log(`[Commands] Loaded ${files.length} commands!`);
 });
 
-client.on("interactionCreate", async (interaction) => {
+client.ws.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
   for (const command of Commands) {
     if (interaction.commandName === command.data.name) {
