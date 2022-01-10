@@ -1,10 +1,17 @@
 require("dotenv").config();
 const fs = require("fs");
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const Commands = [];
+const cmdFiles = fs
+  .readdirSync("./cmds/")
+  .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
+const clientId = `${process.env.clientId}`;
+const guildId = `${process.env.guildId}`;
 const connection = mongoose.connection;
 const client = new Discord.Client({
   disableMentions: "everyone",
@@ -24,6 +31,24 @@ connection
   .on("error", (e) => {
     console.log("Connection error:", e);
   });
+for (const file of cmdFiles) {
+  const command = require(`./commands/${file}`);
+  Commands.push(command.data.toJSON());
+}
+const rest = new REST({ version: "9" }).setToken(token);
+(async () => {
+  try {
+    console.log("Started refreshing application (/) commands.");
+
+    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+      body: Commands,
+    });
+
+    console.log("Successfully reloaded application (/) commands.");
+  } catch (error) {
+    console.error(error);
+  }
+})();
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
@@ -35,7 +60,7 @@ fs.readdir("./events/", (err, files) => {
 });
 
 client.commands = new Discord.Collection();
-/*
+
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   console.log("[Commands] Loading...");
@@ -47,35 +72,6 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
-});
-*/
-
-fs.readdir("./cmds/", (err, files) => {
-  if (err) return console.error(err);
-  console.log("[Commands] Loading...");
-  files.forEach(async (file) => {
-    if (!file.endsWith(".js")) return;
-    let props = require(`./cmds/${file}`);
-    Commands.push(props);
-    console.log(`[Commands] Loaded ${file}`);
-
-    await client.application.commands.set({
-      data: {
-        name: props.name,
-        description: props.description,
-        options: props.options,
-      },
-    });
-  });
-  console.log(`[Commands] Loaded ${files.length} commands!`);
-});
-
-client.ws.on("INTERACTION_CREATE", (interaction) => {
-  const CMDFile = Commands.find(
-    (cmd) => cmd.name.toLowerCase() === interaction.data.name.toLowerCase()
-  );
-  if (CMDFile)
-    CMDFile.execute(client, say, interaction, interaction.data.options);
 });
 
 let interval = 60000;
