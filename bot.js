@@ -31,11 +31,12 @@ connection
   .on("error", (e) => {
     console.log("Connection error:", e);
   });
+
 for (const file of cmdFiles) {
   const command = require(`./commands/${file}`);
   Commands.push(command.data.toJSON());
 }
-const rest = new REST({ version: "9" }).setToken(token);
+const rest = new REST({ version: "9" }).setToken(process.env.token);
 (async () => {
   try {
     console.log("Started refreshing application (/) commands.");
