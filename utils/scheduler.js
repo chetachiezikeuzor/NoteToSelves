@@ -40,7 +40,7 @@ class Scheduler {
 
       agenda.schedule(reminder.date, reminderJobName, {
         userId: userId,
-        reminder: reminder.message,
+        reminders: reminder.message,
       });
 
       let embed = new Discord.MessageEmbed()
