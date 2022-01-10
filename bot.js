@@ -59,7 +59,7 @@ fs.readdir("./cmds/", (err, files) => {
     Commands.push(props);
     console.log(`[Commands] Loaded ${file}`);
 
-    await client.api.applications(client.user.id).commands.post({
+    await client.application.commands.set({
       data: {
         name: props.name,
         description: props.description,
