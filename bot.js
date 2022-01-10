@@ -63,6 +63,7 @@ client.on("messageCreate", async (message) => {
     message.author.id === client.application.owner.id
   ) {
     await client.application.commands.create(data);
+    await client.application.commands.set(data);
     message.channel.send("Created slash commands.");
   }
 });
