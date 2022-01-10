@@ -39,6 +39,7 @@ client.once("ready", () => {
     const command = require(`./cmds/${file}`);
     Commands.push(command);
     data.push(command.data);
+    client.application.commands.set(data);
   }
 });
 
