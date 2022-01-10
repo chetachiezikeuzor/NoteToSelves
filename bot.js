@@ -33,7 +33,7 @@ connection
   });
 
 for (const file of cmdFiles) {
-  const command = require(`./commands/${file}`);
+  const command = require(`./cmds/${file}`);
   Commands.push(command.data.toJSON());
 }
 const rest = new REST({ version: "9" }).setToken(process.env.token);
