@@ -1,5 +1,6 @@
 const userSchema = require("../models/user");
 const embeds = require("../embeds");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 const data = new SlashCommandBuilder()
   .setName("add")
