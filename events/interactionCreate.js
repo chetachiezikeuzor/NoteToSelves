@@ -1,8 +1,8 @@
 const fs = require("fs");
-const commandFiles = fs.readdirSync("./cmds/");
+const commandFiles = fs.readdirSync("../cmds/");
 const commands = [];
 for (const file of commandFiles) {
-  const command = require(`./cmds/${file}`);
+  const command = require(`../cmds/${file}`);
   commands.push(command.data);
 }
 module.exports = (client, interaction) => {
