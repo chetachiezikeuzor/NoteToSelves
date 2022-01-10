@@ -14,7 +14,7 @@ module.exports = {
         u.reminders = [];
         u.save();
       }
-      interaction.reply({ embeds: ["All reminders removed successfully."] });
+      interaction.reply("All reminders removed successfully.");
     });
   },
 };

@@ -134,7 +134,7 @@ module.exports = {
         };
 
         if (reminder.date <= new Date().getTime()) {
-          message.reply(
+          interaction.reply(
             embeds.error("The time for this reminder has already passed.")
           );
           return;
@@ -148,9 +148,7 @@ module.exports = {
         }
         u.save();
         console.log(u.reminders);
-        message.reply({
-          embeds: [embeds.remindersList(u.reminders, u.offset)],
-        });
+        interaction.reply(embeds.remindersList(u.reminders, u.offset));
       }
     });
   },

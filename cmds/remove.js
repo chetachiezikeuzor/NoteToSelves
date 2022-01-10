@@ -28,9 +28,7 @@ module.exports = {
       } else {
         u.reminders.splice(idx, 1);
         u.save();
-        interaction.reply({
-          embeds: [embeds.remindersList(u.reminders, u.offset)],
-        });
+        interaction.reply(embeds.remindersList(u.reminders, u.offset));
       }
     });
   },

@@ -14,10 +14,7 @@ module.exports = {
       } else {
         console.log(u.reminders);
         if (u.reminders.length == 0) interaction.reply(embeds.noReminders());
-        else
-          interaction.reply({
-            embeds: [embeds.remindersList(u.reminders, u.offset)],
-          });
+        else interaction.reply(embeds.remindersList(u.reminders, u.offset));
       }
     });
   },
