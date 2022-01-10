@@ -10,8 +10,8 @@ const userSchema = require("../models/user");
 
 module.exports = {
   data: {
-    name: "list",
-    description: "Lists all active reminders.",
+    name: "note",
+    description: "Sets a reminder to ping at a specific time.",
   },
   run(interaction) {
     const { options, user } = interaction;
