@@ -8,7 +8,7 @@ module.exports = {
     .setDescription("Removes all active reminders."),
 
   async execute(interaction) {
-    if (interaction)
+    if (interaction) {
       userSchema.findById(interaction.user.id).then(async (u) => {
         let numReminders;
         if (u) {
@@ -30,5 +30,6 @@ module.exports = {
 
         await interaction.reply({ embeds: [embed] });
       });
+    }
   },
 };

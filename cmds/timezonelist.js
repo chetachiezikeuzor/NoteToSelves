@@ -10,32 +10,37 @@ module.exports = {
     .setDescription("Lists most popular timezones."),
 
   async execute(interaction) {
-    if (interaction)
-    let embed = new Discord.MessageEmbed()
-    .setColor(process.env.color_gray)
-    .setTitle("Timezone Usage")
-    .setDescription(
-      `**Usage:**\n\`n!timezone <number>\`\n\n**Example:**\n\`n!timezone -4\`
+    if (interaction) {
+      let embed = new Discord.MessageEmbed()
+        .setColor(process.env.color_gray)
+        .setTitle("Timezone Usage")
+        .setDescription(
+          `**Usage:**\n\`n!timezone <number>\`\n\n**Example:**\n\`n!timezone -4\`
     \n You can use one of the popular timezones below, otherwise click [here](https://gist.github.com/JellyWX/913dfc8b63d45192ad6cb54c829324ee)`
-    )
-    .setTimestamp();
+        )
+        .setTimestamp();
 
-    timeZonesList.forEach((timeZone) => {
-        embed.addField(`${timeZone}`, `🕓 ${getTimezoneOffset(timeZone)}`, true);
-    });
+      timeZonesList.forEach((timeZone) => {
+        embed.addField(
+          `${timeZone}`,
+          `🕓 ${getTimezoneOffset(timeZone)}`,
+          true
+        );
+      });
 
-    userSchema.findById(interaction.user.id).then((u) => {
+      userSchema.findById(interaction.user.id).then((u) => {
         if (!u) {
-        return;
+          return;
         } else {
-        embed.setFooter({
+          embed.setFooter({
             text: `${u.offset}`,
-        });
+          });
         }
-    });
+      });
 
-    await interaction.reply({
+      await interaction.reply({
         embeds: [embed],
-    });
+      });
+    }
   },
 };

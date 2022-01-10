@@ -8,7 +8,7 @@ module.exports = {
     .setDescription("Lists all active reminders."),
 
   async execute(interaction) {
-    if (interaction)
+    if (interaction) {
       userSchema.findById(interaction.user.id).then(async (u) => {
         if (!u) {
           await interaction.reply({ embeds: [embeds.noReminders()] });
@@ -22,5 +22,6 @@ module.exports = {
             });
         }
       });
+    }
   },
 };

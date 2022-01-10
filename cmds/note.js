@@ -34,7 +34,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    if (interaction)
+    if (interaction) {
       userSchema.findById(interaction.user.id).then(async (u) => {
         const parameters = `${interaction.options.getString(
           "message"
@@ -124,5 +124,6 @@ module.exports = {
           await interaction.reply({ embeds: [embed] });
         }
       });
+    }
   },
 };
