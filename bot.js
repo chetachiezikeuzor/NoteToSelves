@@ -78,7 +78,7 @@ client.on("interactionCreate", async (interaction) => {
       console.log(
         `${interaction.user.username} ran command ${command.data.name}.`
       );
-      command.run(interaction);
+      console.log("ran");
     }
   }
 });
