@@ -369,7 +369,7 @@ exports.run = async (client, message, args) => {
     )
     .setTimestamp();
   timeZonesList.forEach((timeZone) => {
-    embed.addField(`${timeZone}`, getTimezoneOffset(timeZone), true);
+    embed.addField(`${timeZone}`, `${getTimezoneOffset(timeZone)}`, true);
   });
 
   await message.channel.send({

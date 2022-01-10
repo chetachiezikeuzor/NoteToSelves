@@ -51,54 +51,6 @@ fs.readdir("./commands/", (err, files) => {
   console.log(`[Commands] Loaded ${files.length} commands!`);
 });
 
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-  const command = client.commands.get(interaction.commandName);
-  if (!command) return;
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    if (error) console.error(error);
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
-  }
-});
-
-client.once("ready", () => {
-  console.log("Bot started.");
-  for (const file of commandFiles) {
-    const command = require(`./cmds/${file}`);
-    commands.push(command);
-    data.push(command.data);
-  }
-});
-
-client.on("interaction", (interaction) => {
-  if (!interaction.isCommand()) return;
-  for (const command of commands) {
-    if (interaction.commandName === command.data.name) {
-      console.log(
-        `${interaction.user.username} ran command ${command.data.name}.`
-      );
-      command.run(interaction);
-    }
-  }
-});
-
-client.on("message", async (message) => {
-  if (!client.application.owner) await client.application.fetch();
-
-  if (
-    message.content.toLowerCase() === "!deploy" &&
-    message.author.id === client.application.owner.id
-  ) {
-    await client.application.commands.create(data);
-    message.channel.send("Created slash commands.");
-  }
-});
-
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;
 let expected = Date.now() + delay;
