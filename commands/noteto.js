@@ -2,6 +2,7 @@ const moment = require("moment");
 const parser = require("../utils/parser");
 const Discord = require("discord.js");
 const embeds = require("../embeds");
+const { genericParserErrorMessage } = require("../utils/constants");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
@@ -38,7 +39,7 @@ exports.run = async (client, message, args) => {
         return;
       }
 
-      let reminder = parser.getMessageAndDateFromReminderString(messageContent);
+      let reminder = parser.getMessageAndDateFromReminderString(args[0]);
       let reminderTime = moment(reminder.date);
       const reminderItem = {
         date: reminderTime,

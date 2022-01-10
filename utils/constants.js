@@ -23,8 +23,13 @@ const timeZonesList = [
 ];
 
 const dateFormatString = "ddd, MMM Do, YYYY [at] hh:mm:ss a";
+const genericParserErrorMessage = "Sorry, I didn't understand that.";
+const genericSchedulerErrorMessage =
+  "Sorry, I couldn't do that at this time. Please try again later.";
 
 module.exports = {
   timeZonesList: timeZonesList,
   dateFormatString: dateFormatString,
+  genericParserErrorMessage: genericParserErrorMessage,
+  genericSchedulerErrorMessage: genericSchedulerErrorMessage,
 };
