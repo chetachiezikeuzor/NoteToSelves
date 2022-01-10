@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
 
-  scheduler.snoozeReminders(message.author.id, message.channel, parameters);
+  scheduler.snoozeReminders(message.author.id, message, parameters);
 };
 
 exports.help = {

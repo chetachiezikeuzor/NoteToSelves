@@ -32,8 +32,7 @@ exports.run = async (client, message, args) => {
   setTimeout(() => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
-
-  scheduler.setReminder(message.author.id, message.channel, parameters);
+  scheduler.setReminder(message.author.id, message, parameters);
 };
 
 exports.help = {

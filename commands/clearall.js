@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
 
-  scheduler.clearAllReminders(message.author.id, message.channel);
+  scheduler.clearAllReminders(message.author.id, message);
 };
 
 exports.help = {
