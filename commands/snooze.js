@@ -44,7 +44,7 @@ exports.run = async (client, message, args) => {
       remind = u.reminders.slice(-1)[0];
 
       const reminderItem = {
-        date: reminder.reminderDate,
+        date: reminderDate,
         msg: remind.message,
       };
 
