@@ -8,14 +8,15 @@ module.exports = {
   },
   run(interaction) {
     const { options, user } = interaction;
-    userSchema.findById(user.id).then((u) => {
+    userSchema.findById(user.id).then(async (u) => {
       if (!u) {
-        interaction.reply({ embed: [embeds.noReminders()] });
+        await interaction.reply({ embed: [embeds.noReminders()] });
       } else {
         console.log(u.reminders);
-        if (u.reminders.length == 0) interaction.reply(embeds.noReminders());
+        if (u.reminders.length == 0)
+          await interaction.reply({ embed: [embeds.noReminders()] });
         else
-          interaction.reply({
+          await interaction.reply({
             embeds: [embeds.remindersList(u.reminders, u.offset)],
           });
       }
