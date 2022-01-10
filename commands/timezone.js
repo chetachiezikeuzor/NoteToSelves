@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "timezone",
-  description: "Sets your current time zone offset from UTC (in hours).",
+  description: "Sets time zone offset from UTC (in hours).",
   cooldown: "0",
   usage: "timezone",
 };

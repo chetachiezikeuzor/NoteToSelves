@@ -66,7 +66,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "help",
-  description: "Display the help menu or get information about a command.",
+  description: "Displays the help menu or gets information about a command.",
   cooldown: "0",
   usage: "help [command]",
 };

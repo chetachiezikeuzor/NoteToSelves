@@ -209,7 +209,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "noteto",
-  description: "Sets a reminder to ping you at a specific time.",
+  description: "Sets a reminder to ping at a specific time.",
   cooldown: "5",
   usage: "noteto <id>",
 };

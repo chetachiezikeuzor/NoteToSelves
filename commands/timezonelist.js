@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "timezonelist",
-  description: "Get a list of the most popular timezones..",
+  description: "Lists most popular timezones.",
   cooldown: "0",
   usage: "timezonelist",
 };

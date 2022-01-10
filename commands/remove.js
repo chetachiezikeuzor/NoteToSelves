@@ -31,7 +31,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "remove",
-  description: "Get a list of the most popular timezones..",
+  description: "Removes a specific reminder by ID.",
   cooldown: "0",
   usage: "remove",
 };

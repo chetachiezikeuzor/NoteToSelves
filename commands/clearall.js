@@ -14,7 +14,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "clearall",
-  description: "Sets a reminder to ping you at a specific time.",
+  description: "Removes all active reminders.",
   cooldown: "5",
   usage: "clearall <id>",
 };

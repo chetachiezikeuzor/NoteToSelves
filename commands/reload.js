@@ -45,7 +45,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "reload",
-  description: "Reload a command.",
+  description: "Reloads a command.",
   cooldown: "0",
   usage: "reload <command>",
   dev: true,
