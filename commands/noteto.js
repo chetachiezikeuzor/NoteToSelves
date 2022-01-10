@@ -40,8 +40,7 @@ exports.run = async (client, message, args) => {
 
       let reminder = parser.getMessageAndDateFromReminderString(messageContent);
       let reminderTime = moment(reminder.date);
-
-      const reminder = {
+      const reminderItem = {
         date: reminderTime,
         msg: msg,
       };
@@ -62,7 +61,7 @@ exports.run = async (client, message, args) => {
         return;
       }
 
-      u.reminders.push(reminder);
+      u.reminders.push(reminderItem);
       for (let i = u.reminders.length - 2; i >= 0; i--) {
         if (u.reminders[i].date > u.reminders[i + 1].date)
           [u.reminders[i], u.reminders[i + 1]],
