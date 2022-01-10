@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
     } else {
       remind = u.reminders.slice(-1)[0];
       remind.date = reminderDate;
-      remind.save();
+      u.save();
 
       let embed = new Discord.MessageEmbed()
         .setAuthor({

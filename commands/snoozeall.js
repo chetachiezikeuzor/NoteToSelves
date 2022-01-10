@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
     } else {
       for (let remind of u.reminders) {
         remind.date = reminderDate;
-        remind.save();
+        u.save();
       }
 
       let embed = new Discord.MessageEmbed()
