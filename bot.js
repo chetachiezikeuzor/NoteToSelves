@@ -26,29 +26,6 @@ connection
     console.log("Connection error:", e);
   });
 
-client.on("ready", async () => {
-  for (const fileName of cmdFiles) {
-    const File = require(`./cmds/${fileName}`);
-    Commands.push(File);
-    await client.api.applications(client.user.id).commands.post({
-      data: {
-        name: File.name,
-        description: File.description,
-        options: File.options,
-      },
-    });
-  }
-  console.info(`Logged in as ${client.user.username}`);
-});
-
-client.ws.on("INTERACTION_CREATE", (interaction) => {
-  const CMDFile = Commands.find(
-    (cmd) => cmd.name.toLowerCase() === interaction.data.name.toLowerCase()
-  );
-  if (CMDFile)
-    CMDFile.execute(client, say, interaction, interaction.data.options);
-});
-
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
@@ -59,7 +36,7 @@ fs.readdir("./events/", (err, files) => {
 });
 
 client.commands = new Discord.Collection();
-
+/*
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   console.log("[Commands] Loading...");
@@ -71,6 +48,37 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
+});
+*/
+
+fs.readdir("./cmds/", (err, files) => {
+  if (err) return console.error(err);
+  console.log("[Commands] Loading...");
+  files.forEach((file) => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./cmds/${file}`);
+    Commands.push(props);
+    console.log(`[Commands] Loaded ${file}`);
+
+    client.commands.set(props.help.name, props);
+
+    await client.api.applications(client.user.id).commands.post({
+      data: {
+        name: props.name,
+        description: props.description,
+        options: props.options,
+      },
+    });
+  });
+  console.log(`[Commands] Loaded ${files.length} commands!`);
+});
+
+client.ws.on("INTERACTION_CREATE", (interaction) => {
+  const CMDFile = Commands.find(
+    (cmd) => cmd.name.toLowerCase() === interaction.data.name.toLowerCase()
+  );
+  if (CMDFile)
+    CMDFile.execute(client, say, interaction, interaction.data.options);
 });
 
 let interval = 60000;
