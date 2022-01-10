@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const embeds = require("../embeds");
 const userSchema = require("../models/user");
 const { SlashCommandBuilder } = require("@discordjs/builders");

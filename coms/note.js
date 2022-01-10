@@ -1,6 +1,5 @@
 const moment = require("moment");
 const parser = require("../utils/parser");
-const embeds = require("../embeds");
 const Discord = require("discord.js");
 const {
   genericParserErrorMessage,
