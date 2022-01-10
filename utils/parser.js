@@ -40,6 +40,7 @@ module.exports.getMessageAndDateFromReminderString = (reminderString) => {
   }
 
   let parsedDate = chrono.parse(reminderString, new Date(), {})[0];
+  console.log(parsedDate);
 
   let message = reminderString.replace(parsedDate.text, "").trim();
 
