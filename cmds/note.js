@@ -26,7 +26,7 @@ module.exports = {
     )
     .addStringOption((option) =>
       option
-        .setName("to?")
+        .setName("to")
         .setDescription("Where you'd like the note to be sent.")
         .setRequired(true)
         .addChoice("self", "self")
