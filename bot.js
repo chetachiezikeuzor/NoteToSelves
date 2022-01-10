@@ -1,18 +1,24 @@
 require("dotenv").config();
+const fs = require("fs");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const commandFiles = fs.readdirSync("./commands");
 const commands = [],
   data = [];
-const fs = require("fs");
+const config = require("./config.js");
+const connection = mongoose.connection;
+client.config = config.content;
+const client = new Discord.Client({
+  disableMentions: "everyone",
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+});
 
 mongoose.connect(process.env.mongodbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const connection = mongoose.connection;
 connection
   .once("open", () => {
     console.log("MongoDB database connection established successfully");
@@ -20,14 +26,6 @@ connection
   .on("error", (e) => {
     console.log("Connection error:", e);
   });
-
-const client = new Discord.Client({
-  disableMentions: "everyone",
-  intents: ["GUILDS", "GUILD_MESSAGES"],
-});
-const config = require("./config.js");
-
-client.config = config.content;
 
 client.on("interaction", (interaction) => {
   if (!interaction.isCommand()) return;
