@@ -7,7 +7,7 @@ const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const Commands = [],
   data = [];
-const cmdFiles = fs
+const commandFiles = fs
   .readdirSync("./cmds/")
   .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
@@ -34,41 +34,33 @@ connection
   });
 
 client.once("ready", () => {
-  for (const file of cmdFiles) {
-    const command = require(`./cmds/${file}`);
-    Commands.push(command);
-    data.push(command.data);
-    client.application.commands.set([]);
-
-    console.log(`[Commands] Loaded ${command.data.name}.js`);
-  }
+  console.log("Ready!");
 });
 
-client.on("interactionCreate", (interaction) => {
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.data.name, command);
+}
+
+client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
-  for (const command of Commands) {
-    if (interaction.commandName === command.data.name) {
-      console.log(
-        `${interaction.user.username} ran command ${command.data.name}.`
-      );
-      command.run(interaction);
-    }
+
+  const command = client.commands.get(interaction.commandName);
+
+  if (!command) return;
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    return interaction.reply({
+      content: "There was an error while executing this command!",
+      ephemeral: true,
+    });
   }
 });
 
-client.on("messageCreate", async (message) => {
-  if (!client.application.owner) await client.application.fetch();
-
-  if (
-    message.content.toLowerCase() === "!deploy" &&
-    message.author.id === client.application.owner.id
-  ) {
-    await client.application.commands.create([]);
-    await client.application.commands.set([]);
-    message.channel.send("Created slash commands.");
-  }
-});
-
+/*
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
@@ -91,7 +83,7 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
-});
+});*/
 
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;
