@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const embeds = require("../embeds");
 
 exports.run = async (client, message, args) => {
-  userSchema.findById(message.author.id).then((u) => {
+  userSchema.findById(message.author.id).then(async (u) => {
     if (!u) {
       await message.channel.send({
         embeds: [
