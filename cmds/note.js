@@ -6,6 +6,7 @@ const {
   dateFormatString,
 } = require("../utils/constants");
 const userSchema = require("../models/user");
+const channelSchema = require("../models/channel");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -35,12 +36,17 @@ module.exports = {
 
   async execute(interaction) {
     if (interaction) {
-      userSchema.findById(interaction.user.id).then(async (u) => {
-        const parameters = `${interaction.options.getString(
-          "message"
-        )} ${interaction.options.getString("time")}`;
-        console.log(parameters);
+      const parameters = `${interaction.options.getString(
+        "message"
+      )} ${interaction.options.getString("time")}`;
+      const choice = interaction.options.getString("to");
 
+      const finder =
+        choice == "self"
+          ? userSchema.findById(interaction.user.id)
+          : channelSchema.findById(interaction.channel.id);
+
+      finder.then(async (u) => {
         if (!u) {
           await interaction.reply({
             embeds: [
