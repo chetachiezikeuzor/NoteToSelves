@@ -32,25 +32,20 @@ connection
     console.log("Connection error:", e);
   });
 
-for (const file of cmdFiles) {
-  const command = require(`./cmds/${file}`);
-  Commands.push(command);
-}
-const rest = new REST({ version: "9" }).setToken(process.env.token);
-(async () => {
-  try {
-    console.log("Started refreshing application (/) commands.");
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: [],
+client.on("ready", async () => {
+  for (const fileName of cmdFiles) {
+    const File = require(`./cmds/${fileName}`);
+    Commands.push(File);
+    await client.api.applications(client.user.id).commands.post({
+      data: {
+        name: File.name,
+        description: File.description,
+        options: File.options,
+      },
     });
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: Commands,
-    });
-    console.log("Successfully reloaded application (/) commands.");
-  } catch (error) {
-    console.error(error);
   }
-})();
+  console.info(`Logged in as ${client.user.username}`);
+});
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
