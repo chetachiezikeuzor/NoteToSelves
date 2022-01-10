@@ -27,18 +27,6 @@ connection
     console.log("Connection error:", e);
   });
 
-client.on("interaction", (interaction) => {
-  if (!interaction.isCommand()) return;
-  for (const command of commands) {
-    if (interaction.commandName === command.data.name) {
-      console.log(
-        `${interaction.user.username} ran command ${command.data.name}.`
-      );
-      command.run(interaction);
-    }
-  }
-});
-
 client.on("messageCreate", async (message) => {
   if (!client.application.owner) await client.application.fetch();
 
@@ -73,6 +61,21 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
+});
+
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+  const command = client.commands.get(interaction.commandName);
+  if (!command) return;
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    if (error) console.error(error);
+    await interaction.reply({
+      content: "There was an error while executing this command!",
+      ephemeral: true,
+    });
+  }
 });
 
 let interval = 60000;
