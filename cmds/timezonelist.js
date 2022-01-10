@@ -15,7 +15,7 @@ module.exports = {
         .setColor(process.env.color_gray)
         .setTitle("Timezone Usage")
         .setDescription(
-          `**Usage:**\n\`n!timezone <number>\`\n\n**Example:**\n\`n!timezone -4\`
+          `**Usage:**\n\`/timezone <number>\`\n\n**Example:**\n\`/timezone -4\`
     \n You can use one of the popular timezones below, otherwise click [here](https://gist.github.com/JellyWX/913dfc8b63d45192ad6cb54c829324ee)`
         )
         .setTimestamp();

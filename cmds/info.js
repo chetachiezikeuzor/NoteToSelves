@@ -43,7 +43,7 @@ module.exports = {
             client.users.cache.size
           }\`\nUptime - \`${days}d ${hours}h ${mins}m ${realTotalSecs}s\`\nMemory Usage - \`${
             Math.round(used * 100) / 100
-          }MB\`\nAPI Ping - \`${Math.floor(client.ws.ping)}ms\`\n`
+          }MB\`\nAPI Ping - \`${Math.floor(botping)}ms\`\n`
         );
 
       interaction.reply({ embeds: [embed] });
