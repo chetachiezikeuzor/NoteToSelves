@@ -33,12 +33,12 @@ exports.run = async (client, message, args) => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
 
-  scheduler.listReminders(message.author.id, message.channel);
+  scheduler.snoozeReminders(message.author.id, message.channel, parameters);
 };
 
 exports.help = {
-  name: "list",
+  name: "snoozeall",
   description: "Sets a reminder to ping you at a specific time.",
   cooldown: "5",
-  usage: "list <id>",
+  usage: "snoozeall <id>",
 };

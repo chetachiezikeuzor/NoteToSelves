@@ -41,25 +41,4 @@ exports.help = {
   description: "Sets a reminder to ping you at a specific time.",
   cooldown: "5",
   usage: "noteto <id>",
-  options: [
-    {
-      name: "message",
-      type: "STRING",
-      description: "The message you will get pinged with.",
-      required: true,
-    },
-    {
-      name: "time",
-      type: "STRING",
-      description: "<hour:minute><am|pm>",
-      required: true,
-    },
-    {
-      name: "date",
-      type: "STRING",
-      description:
-        "<month/day/year> (leave blank to use today, or leave year blank to use current year)",
-      required: false,
-    },
-  ],
 };
