@@ -20,7 +20,7 @@ exports.run = async (client, message, args) => {
     });
     return;
   }
-  userSchema.findById(message.author.id).then((u) => {
+  userSchema.findById(message.author.id).then(async (u) => {
     if (!u) {
       new userSchema({
         _id: message.author.id,
