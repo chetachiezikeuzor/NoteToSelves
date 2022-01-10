@@ -34,7 +34,7 @@ connection
 
 for (const file of cmdFiles) {
   const command = require(`./cmds/${file}`);
-  Commands.push(command.data);
+  Commands.push(command);
 }
 const rest = new REST({ version: "9" }).setToken(process.env.token);
 (async () => {
