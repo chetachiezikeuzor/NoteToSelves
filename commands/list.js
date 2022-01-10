@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const userSchema = require("../models/user");
 const { Scheduler } = require("../utils/scheduler");
 
 let bot = new Discord.Client({
@@ -8,6 +9,7 @@ let bot = new Discord.Client({
 let scheduler = new Scheduler(bot);
 
 exports.run = async (client, message, args) => {
+  const { options, user } = interaction;
   let messageContent = message.content.substring(1);
   let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
 
@@ -33,7 +35,15 @@ exports.run = async (client, message, args) => {
     client.cooldownPhoto.delete(message.author.id);
   }, exports.help.cooldown * 1000);
 
-  scheduler.listReminders(message.author.id, message.channel);
+  userSchema.findById(user.id).then((u) => {
+    if (!u) {
+      interaction.reply(embeds.noReminders());
+    } else {
+      console.log(u.reminders);
+      if (u.reminders.length == 0) interaction.reply(embeds.noReminders());
+      else interaction.reply(embeds.remindersList(u.reminders, u.offset));
+    }
+  });
 };
 
 exports.help = {
