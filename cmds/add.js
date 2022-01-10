@@ -148,7 +148,9 @@ module.exports = {
         }
         u.save();
         console.log(u.reminders);
-        interaction.reply(embeds.remindersList(u.reminders, u.offset));
+        interaction.reply({
+          embeds: [embeds.remindersList(u.reminders, u.offset)],
+        });
       }
     });
   },

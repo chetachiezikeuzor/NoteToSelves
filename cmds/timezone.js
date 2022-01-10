@@ -38,7 +38,9 @@ module.exports = {
         u.offset = offset;
         u.save();
       }
-      interaction.reply(`Your time zone is now \`${offset}\` hours from UTC.`);
+      interaction.reply({
+        embeds: [`Your time zone is now \`${offset}\` hours from UTC.`],
+      });
     });
   },
 };
