@@ -31,7 +31,18 @@ exports.run = async (client, message, args) => {
       u.offset = offset;
       u.save();
     }
-    message.reply(`Your time zone is now \`${offset}\` hours from UTC.`);
+
+    let embed = new Discord.MessageEmbed()
+      .setAuthor({
+        name: `Hey ${message.author.tag},`,
+        iconURL: "https://i.imgur.com/qLS6esg.png",
+      })
+      .setColor(process.env.color_blue)
+      .setDescription(`Your time zone is now \`${offset}\` hours from UTC.`)
+      .setColor(process.env.color_blue)
+      .setTimestamp();
+
+    await message.reply({ embeds: [embed] });
   });
 };
 

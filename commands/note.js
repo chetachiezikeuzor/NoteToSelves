@@ -90,7 +90,7 @@ exports.run = async (client, message, args) => {
         .setColor(process.env.color_blue)
         .setTimestamp();
 
-      await message.channel.send({ embeds: [embed] });
+      await message.reply({ embeds: [embed] });
     }
   });
 };
