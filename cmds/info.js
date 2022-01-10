@@ -13,6 +13,7 @@ module.exports = {
     .setDescription("Get information about the bot."),
 
   async execute(interaction) {
+    if(interaction)
     let botping = new Date() - interaction.createdAt;
 
     let totalSeconds = process.uptime();
@@ -46,6 +47,6 @@ module.exports = {
         }MB\`\nAPI Ping - \`${Math.floor(client.ws.ping)}ms\`\n`
       );
 
-    interaction.reply({ embeds: [embed] });
-  },
+      interaction.reply({ embeds: [embed] });
+  }
 };
