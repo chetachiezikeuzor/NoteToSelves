@@ -373,6 +373,35 @@ class Scheduler {
 
       log("reminder sent to user " + userId);
     };
+
+    const announceReminder = async function (userId, message) {
+      const user = await bot.fetchUser(userId);
+
+      if (user == undefined) {
+        log("user not found: " + userId);
+        return;
+      }
+
+      const channel = await user.createDM();
+
+      if (channel == undefined) {
+        log("dm channel not found for user " + userId);
+        return;
+      }
+
+      let embed = new Discord.MessageEmbed()
+        .setAuthor({
+          name: "Reminder",
+          iconURL: message.author.avatarURL(),
+        })
+        .setColor(process.env.color_blue)
+        .setDescription(`Hey **<@${userId}>**, remember **"${message}"**.`)
+        .setTimestamp();
+
+      await message.channel.send({ embeds: [embed] });
+
+      log("reminder sent to user " + userId);
+    };
     const agenda = new Agenda({
       db: { address: process.env.mongodbUri, collection: "agenda" },
     }).processEvery("one minute");
