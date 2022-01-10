@@ -1,3 +1,4 @@
+const fs = require("fs");
 const commandFiles = fs.readdirSync("./commands/");
 const commands = [],
   data = [];
