@@ -9,7 +9,7 @@ const userSchema = require("../models/user");
 
 module.exports = {
   data: {
-    name: "note",
+    name: "noter",
     description: "Sets a reminder to ping you at a specific time.",
     options: [
       {
