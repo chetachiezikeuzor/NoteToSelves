@@ -1,10 +1,6 @@
 const Discord = require("discord.js");
-const embeds = require("../embeds");
-const userSchema = require("../models/user");
+const momentTZ = require("moment-timezone");
 
-import momentTZ from "moment-timezone";
-
-const defaultTimeZone = momentTZ.tz.guess();
 const timeZonesList = momentTZ.tz.names();
 
 function getTimezoneOffset(timeZone) {
@@ -16,14 +12,6 @@ function getTimezoneOffset(timeZone) {
 
   return -offset;
 }
-
-let date = new Date();
-timeZonesList.forEach((timeZone) => {
-  let strTime = date.toLocaleString("en-US", {
-    timeZone: `${timeZone}`,
-  });
-  console.log(timeZone, strTime);
-});
 
 exports.run = async (client, message, args) => {
   const offset = parseInt(args[0]);
@@ -47,7 +35,7 @@ exports.run = async (client, message, args) => {
   let embed = new Discord.MessageEmbed()
     .setTitle("Timezone Usage")
     .setDescription(
-      `Usage:\n\`!ntimezone\` <number>\/\nExample:\n\`!ntimezone\` -4
+      `Usage:\n\`n!timezone\` <number>\/\nExample:\n\`n!timezone\` -4
     `
     )
     .setColor(process.env.color_blue)
