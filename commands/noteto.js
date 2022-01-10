@@ -6,6 +6,7 @@ const { genericParserErrorMessage } = require("../utils/constants");
 const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
+  let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
   userSchema.findById(message.author.id).then(async (u) => {
     if (!u) {
       await message.channel.send({
@@ -23,7 +24,7 @@ exports.run = async (client, message, args) => {
         ],
       });
     } else {
-      if (!parser.validReminderString(args[0])) {
+      if (!parser.validReminderString(parameters)) {
         await message.channel.send({
           embeds: [
             new Discord.MessageEmbed()
@@ -39,7 +40,7 @@ exports.run = async (client, message, args) => {
         return;
       }
 
-      let reminder = parser.getMessageAndDateFromReminderString(args[0]);
+      let reminder = parser.getMessageAndDateFromReminderString(parameters);
       let reminderTime = moment(reminder.date);
       const reminderItem = {
         date: reminderTime,
