@@ -43,7 +43,7 @@ exports.run = async (client, message, args) => {
     );
 
   timeZonesList.forEach((timeZone) => {
-    embed.addField(`${timeZone}`, `${getTimezoneOffset(timeZone)}`, true);
+    embed.addField(`${timeZone}`, `⏱ ${getTimezoneOffset(timeZone)}`, true);
   });
   userSchema.findById(message.author.id).then((u) => {
     if (!u) {
