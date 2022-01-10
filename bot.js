@@ -34,7 +34,7 @@ connection
 
 client.once("ready", () => {
   console.log("Bot started.");
-  for (const file of commandFiles) {
+  for (const file of cmdFiles) {
     const command = require(`./cmds/${file}`);
     Commands.push(command);
     data.push(command.data);
