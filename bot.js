@@ -8,7 +8,7 @@ const userSchema = require("./models/user");
 const Commands = [],
   data = [];
 const commandFiles = fs
-  .readdirSync("./cmds/")
+  .readdirSync("./coms/")
   .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const clientId = `${process.env.clientId}`;
@@ -38,7 +38,7 @@ client.once("ready", () => {
 });
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
+  const command = require(`./coms/${file}`);
   client.commands.set(command.data.name, command);
 }
 
