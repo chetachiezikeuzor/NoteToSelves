@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const embeds = require("../embeds");
+const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
   userSchema.findById(message.author.id).then(async (u) => {
