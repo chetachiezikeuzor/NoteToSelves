@@ -56,7 +56,7 @@ exports.remindersList = (reminders, offset) => {
   const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_blue)
     .setTitle("Reminders List")
-    .setImage(
+    .setThumbnail(
       "https://images.unsplash.com/photo-1606327054629-64c8b0fd6e4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     );
   if (reminders.length === 0)
@@ -82,9 +82,12 @@ const dateStr = (d) => {
   if (h >= 12) v = "pm";
   if (h > 12) h -= 12;
   if (h == 0) h += 12;
-  return `${h}:${pad(date.getMinutes(), 2)} ${v} ${
+  return `${
     date.getMonth() + 1
-  }.${date.getDate()}.${date.getFullYear()}`;
+  }.${date.getDate()}.${date.getFullYear()} at ${h}:${pad(
+    date.getMinutes(),
+    2
+  )} ${v}  `;
 };
 
 const pad = (num, size) => {
