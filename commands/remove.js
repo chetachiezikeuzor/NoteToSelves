@@ -4,7 +4,7 @@ const userSchema = require("../models/user");
 
 exports.run = async (client, message, args) => {
   let idx = parseInt(args[0]);
-  userSchema.findById(message.author.id).then((u) => {
+  userSchema.findById(message.author.id).then(async (u) => {
     if (!u || isNaN(idx) || idx < 0 || idx >= u.reminders.length) {
       await message.channel.send({
         embeds: [
