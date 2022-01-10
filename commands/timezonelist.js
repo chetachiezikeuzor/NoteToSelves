@@ -41,16 +41,19 @@ exports.run = async (client, message, args) => {
     .setDescription(
       `**Usage:**\n\`n!timezone <number>\`\n\n**Example:**\n\`n!timezone -4\`
     \n You can use one of the popular timezones below, otherwise click [here](https://gist.github.com/JellyWX/913dfc8b63d45192ad6cb54c829324ee)`
-    );
+    )
+    .setTimestamp();
 
   timeZonesList.forEach((timeZone) => {
     embed.addField(`${timeZone}`, `🕝 ${getTimezoneOffset(timeZone)}`, true);
   });
   userSchema.findById(message.author.id).then((u) => {
     if (!u) {
-      embed.setTimestamp();
+      return;
     } else {
-      embed.setTimestamp(u.offset);
+      embed.setFooter({
+        text: `${u.offset}`,
+      });
     }
   });
 
