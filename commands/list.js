@@ -6,34 +6,9 @@ let bot = new Discord.Client({
   disableMentions: "everyone",
   intents: ["GUILDS", "GUILD_MESSAGES"],
 });
-let scheduler = new Scheduler(bot);
 
-exports.run = async (client, message, args) => {
+exports.run = async (interaction) => {
   const { options, user } = interaction;
-  let messageContent = message.content.substring(1);
-  let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
-
-  if (!client.cooldownPhoto) {
-    client.cooldownPhoto = new Set();
-  }
-
-  let cooldownEmbed = new Discord.MessageEmbed()
-    .setAuthor({
-      name: message.author.tag,
-      iconURL: message.author.avatarURL(),
-    })
-    .setColor(process.env.color_pink)
-    .setDescription(
-      `Please wait ${exports.help.cooldown} seconds between commands.`
-    );
-
-  if (client.cooldownPhoto.has(message.author.id))
-    return message.channel.send({ embeds: [cooldownEmbed] });
-
-  client.cooldownPhoto.add(message.author.id);
-  setTimeout(() => {
-    client.cooldownPhoto.delete(message.author.id);
-  }, exports.help.cooldown * 1000);
 
   userSchema.findById(user.id).then((u) => {
     if (!u) {
