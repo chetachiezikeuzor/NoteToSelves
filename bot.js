@@ -39,6 +39,18 @@ client.on("interaction", (interaction) => {
   }
 });
 
+client.on("message", async (message) => {
+  if (!client.application.owner) await client.application.fetch();
+
+  if (
+    message.content.toLowerCase() === "!deploy" &&
+    message.author.id === client.application.owner.id
+  ) {
+    await client.application.commands.create(data);
+    message.channel.send("Created slash commands.");
+  }
+});
+
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
