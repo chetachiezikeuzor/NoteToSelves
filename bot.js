@@ -39,7 +39,7 @@ client.on("interaction", (interaction) => {
   }
 });
 
-client.on("message", async (message) => {
+client.on("messageCreate", async (message) => {
   if (!client.application.owner) await client.application.fetch();
 
   if (
