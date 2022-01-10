@@ -38,7 +38,7 @@ client.once("ready", () => {
     const command = require(`./cmds/${file}`);
     Commands.push(command);
     data.push(command.data);
-    client.application.commands.set(data);
+    client.application.commands.set([]);
 
     console.log(`[Commands] Loaded ${command.data.name}.js`);
   }
@@ -63,8 +63,8 @@ client.on("messageCreate", async (message) => {
     message.content.toLowerCase() === "!deploy" &&
     message.author.id === client.application.owner.id
   ) {
-    await client.application.commands.create(data);
-    await client.application.commands.set(data);
+    await client.application.commands.create([]);
+    await client.application.commands.set([]);
     message.channel.send("Created slash commands.");
   }
 });
