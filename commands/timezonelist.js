@@ -361,31 +361,12 @@ function getTimezoneOffset(timeZone) {
 }
 
 exports.run = async (client, message, args) => {
-  const offset = parseInt(args[0]);
-  if (isNaN(offset) || offset < -11 || offset > 14) {
-    await message.channel.send({
-      embeds: [
-        new Discord.MessageEmbed()
-          .setAuthor({
-            name: "An error occured!",
-            iconURL: "https://i.imgur.com/PZ9qLe7.png",
-          })
-          .setDescription(
-            "Invalid offset. The value must be an integer between `-11` and `14`."
-          )
-          .setColor(process.env.color_red)
-          .setTimestamp(),
-      ],
-    });
-    return;
-  }
   let embed = new Discord.MessageEmbed()
     .setTitle("Timezone Usage")
     .setDescription(
       `Usage:\n\`n!timezone\` <number>\/\nExample:\n\`n!timezone\` -4
     `
     )
-
     .setTimestamp();
   timeZonesList.forEach((timeZone) => {
     embed.addField(`${timeZone}`, getTimezoneOffset(timeZone), true);
