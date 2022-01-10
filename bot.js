@@ -8,11 +8,11 @@ const commands = [],
   data = [];
 const config = require("./config.js");
 const connection = mongoose.connection;
-client.config = config.content;
 const client = new Discord.Client({
   disableMentions: "everyone",
   intents: ["GUILDS", "GUILD_MESSAGES"],
 });
+client.config = config.content;
 
 mongoose.connect(process.env.mongodbUri, {
   useNewUrlParser: true,
