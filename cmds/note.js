@@ -27,7 +27,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("to?")
-        .setDescription("The time by which you'd like to be reminded.")
+        .setDescription("Where you'd like the note to be sent.")
         .setRequired(true)
         .addChoice("self", "self")
         .addChoice("channel", "channel")
