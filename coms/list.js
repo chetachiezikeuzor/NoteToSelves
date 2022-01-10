@@ -8,9 +8,8 @@ module.exports = {
     .setName("list")
     .setDescription("Lists all active reminders."),
   async execute(interaction) {
-    const { options, user } = interaction;
     if (interaction)
-      userSchema.findById(user.id).then(async (u) => {
+      userSchema.findById(interaction.user.id).then(async (u) => {
         if (!u) {
           await interaction.reply({ embeds: [embeds.noReminders()] });
         } else {
