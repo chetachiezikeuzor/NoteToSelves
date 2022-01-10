@@ -1,6 +1,6 @@
 require("dotenv").config();
 const fs = require("fs");
-const { fs, readdirSync } = require("fs");
+const { readdirSync } = require("fs");
 const mongoose = require("mongoose");
 const { APIMessage } = require("discord.js");
 
