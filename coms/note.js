@@ -28,10 +28,10 @@ module.exports = {
   async execute(interaction) {
     if (interaction)
       userSchema.findById(interaction.user.id).then(async (u) => {
-        const parameters = [
-          interaction.options.getString("message"),
-          interaction.options.getString("time"),
-        ];
+        const parameters = {
+          0: interaction.options.getString("message"),
+          1: interaction.options.getString("time"),
+        };
 
         if (!u) {
           await interaction.reply({
