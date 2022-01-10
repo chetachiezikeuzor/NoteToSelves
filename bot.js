@@ -41,6 +41,9 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
   try {
     console.log("Started refreshing application (/) commands.");
     await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+      body: [],
+    });
+    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
       body: Commands,
     });
     console.log("Successfully reloaded application (/) commands.");
@@ -105,24 +108,3 @@ function step() {
 }
 
 client.login(process.env.token);
-
-async function say(interaction, content) {
-  return client.api
-    .interactions(interaction.id, interaction.token)
-    .callback.post({
-      data: {
-        type: 4,
-        data: await createAPIMessage(interaction, content),
-      },
-    });
-}
-
-async function createAPIMessage(interaction, content) {
-  const apiMessage = await Discord.APIMessage.create(
-    client.channels.resolve(interaction.channel_id),
-    content
-  )
-    .resolveData()
-    .resolveFiles();
-  return { ...apiMessage.data, files: apiMessage.files };
-}
