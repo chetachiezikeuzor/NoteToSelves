@@ -98,6 +98,8 @@ fs.readdir("./commands/", (err, files) => {
   console.log(`[Commands] Loaded ${files.length} commands!`);
 });*/
 
+setInterval(checkForReminders, 10000);
+
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;
 let expected = Date.now() + delay;
@@ -113,7 +115,7 @@ function step() {
         for (let i = 0; i < user.reminders.length; i++) {
           if (user.reminders[i].date <= now.getTime()) {
             let m = user.reminders[i].msg;
-            client.users.fetch(user._id).then((u) => {
+            client.users.fetch(user.userID).then((u) => {
               u.send(`<@${u.id}> ${m}`);
               console.log(u.username + ' was sent the reminder "' + m + '"');
             });

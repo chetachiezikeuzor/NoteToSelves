@@ -23,6 +23,14 @@ module.exports = {
         .setName("time")
         .setDescription("The time by which you'd like to be reminded.")
         .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("to?")
+        .setDescription("The time by which you'd like to be reminded.")
+        .setRequired(true)
+        .addChoice("self", "self")
+        .addChoice("channel", "channel")
     ),
 
   async execute(interaction) {

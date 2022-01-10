@@ -27,7 +27,7 @@ class Scheduler {
         return null;
       }
 
-      return rawJob._id;
+      return rawJob.userID;
     };
     this.setReminder = async function (userId, message, messageContent) {
       if (!parser.validReminderString(messageContent)) {
@@ -89,7 +89,7 @@ class Scheduler {
         return;
       }
 
-      agenda.jobs({ _id: jobId }, async (err, jobs) => {
+      agenda.jobs({ userID: jobId }, async (err, jobs) => {
         if (err) {
           log(`reminder snooze failed due to error: ${err}`);
           return;
@@ -265,7 +265,7 @@ class Scheduler {
         return;
       }
 
-      agenda.jobs({ _id: jobId }, async (err, jobs) => {
+      agenda.jobs({ userID: jobId }, async (err, jobs) => {
         if (err) {
           let error = new Discord.MessageEmbed()
             .setAuthor({
@@ -391,35 +391,6 @@ class Scheduler {
       );
     };
     const sendReminder = async function (userId, message) {
-      const user = await bot.fetchUser(userId);
-
-      if (user == undefined) {
-        log("user not found: " + userId);
-        return;
-      }
-
-      const channel = await user.createDM();
-
-      if (channel == undefined) {
-        log("dm channel not found for user " + userId);
-        return;
-      }
-
-      let embed = new Discord.MessageEmbed()
-        .setAuthor({
-          name: "Reminder",
-          iconURL: message.author.avatarURL(),
-        })
-        .setColor(process.env.color_blue)
-        .setDescription(`Hey **<@${userId}>**, remember **"${message}"**.`)
-        .setTimestamp();
-
-      await message.channel.send({ embeds: [embed] });
-
-      log("reminder sent to user " + userId);
-    };
-
-    const announceReminder = async function (userId, message) {
       const user = await bot.fetchUser(userId);
 
       if (user == undefined) {
