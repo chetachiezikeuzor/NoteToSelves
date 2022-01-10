@@ -51,7 +51,7 @@ fs.readdir("./commands/", (err, files) => {
 });
 */
 
-fs.readdir("./cmds/", (err, files) => {
+fs.readdir("./cmds/", async (err, files) => {
   if (err) return console.error(err);
   console.log("[Commands] Loading...");
   files.forEach((file) => {
