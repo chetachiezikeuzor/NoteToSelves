@@ -53,6 +53,7 @@ client.ws.on("INTERACTION_CREATE", (interaction) => {
     CMDFile.execute(client, say, interaction, interaction.data.options);
 });
 
+/*
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
@@ -63,6 +64,7 @@ fs.readdir("./events/", (err, files) => {
 });
 
 client.commands = new Discord.Collection();
+
 
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
@@ -75,7 +77,7 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
-});
+});*/
 
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;
