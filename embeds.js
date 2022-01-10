@@ -55,7 +55,10 @@ exports.updateOffset = (offset) => {
 exports.remindersList = (reminders, offset) => {
   const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_blue)
-    .setTitle("Reminders List");
+    .setTitle("Reminders List")
+    .setImage(
+      "https://images.unsplash.com/photo-1606327054629-64c8b0fd6e4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+    );
   if (reminders.length === 0)
     embed.setDescription("There are no active reminders.");
   else
@@ -73,15 +76,15 @@ exports.remindersList = (reminders, offset) => {
 };
 
 const dateStr = (d) => {
-  var date = new Date(d);
-  var h = date.getHours(),
-    v = "AM";
-  if (h >= 12) v = "PM";
+  let date = new Date(d);
+  let h = date.getHours(),
+    v = "am";
+  if (h >= 12) v = "pm";
   if (h > 12) h -= 12;
   if (h == 0) h += 12;
   return `${h}:${pad(date.getMinutes(), 2)} ${v} ${
     date.getMonth() + 1
-  }/${date.getDate()}/${date.getFullYear()}`;
+  }.${date.getDate()}.${date.getFullYear()}`;
 };
 
 const pad = (num, size) => {
