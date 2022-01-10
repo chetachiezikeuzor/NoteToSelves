@@ -7,7 +7,7 @@ const { APIMessage } = require("discord.js");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const Commands = [];
-const cmdFiles = readdirSync("./cmds/").filter((file) => file.endsWith(".js"));
+const cmdFiles = readdirSync("./comds/").filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Discord.Client({
@@ -31,7 +31,7 @@ connection
 
 client.on("ready", async () => {
   for (const fileName of cmdFiles) {
-    const File = require(`./cmds/${fileName}`);
+    const File = require(`./comds/${fileName}`);
     Commands.push(File);
     await client.api.applications(client.user.id).commands.post({
       data: {
