@@ -27,18 +27,6 @@ connection
     console.log("Connection error:", e);
   });
 
-client.on("messageCreate", async (message) => {
-  if (!client.application.owner) await client.application.fetch();
-
-  if (
-    message.content.toLowerCase() === "!deploy" &&
-    message.author.id === client.application.owner.id
-  ) {
-    await client.application.commands.create(data.help.name, data);
-    message.channel.send("Created slash commands.");
-  }
-});
-
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
