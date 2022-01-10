@@ -8,13 +8,26 @@ module.exports = {
   },
   run(interaction) {
     const { options, user } = interaction;
-    const args = options.map((option) => option.value);
-    userSchema.findById(user.id).then((u) => {
+    userSchema.findById(user.id).then(async (u) => {
+      let numReminders;
       if (u) {
+        numReminders = u.reminders.length;
         u.reminders = [];
         u.save();
       }
-      interaction.reply("All reminders removed successfully.");
+
+      let embed = new Discord.MessageEmbed()
+        .setAuthor({
+          name: user.tag,
+          iconURL: user.avatarURL(),
+        })
+        .setColor(process.env.color_blue)
+        .setDescription(
+          `I have snoozed **${numReminders}** active reminders for you`
+        )
+        .setTimestamp();
+
+      await message.reply({ embeds: [embed] });
     });
   },
 };
