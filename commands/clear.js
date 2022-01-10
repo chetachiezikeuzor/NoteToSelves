@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
       })
       .setColor(process.env.color_blue)
       .setDescription(
-        `I have snoozed **${numReminders}** active reminders for you`
+        `I have cleared all **${numReminders}** active reminders for you`
       )
       .setTimestamp();
 
