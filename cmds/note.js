@@ -11,7 +11,6 @@ module.exports = {
   data: {
     name: "note",
     description: "Sets a reminder to ping you at a specific time.",
-    usage: "note <id>",
     options: [
       {
         name: "message",
