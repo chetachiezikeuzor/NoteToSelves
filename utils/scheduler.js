@@ -63,7 +63,16 @@ class Scheduler {
     };
     this.snoozeReminder = async function (userId, message, messageContent) {
       if (!parser.validSnoozeString(messageContent)) {
-        await message.channel.send(genericParserErrorMessage);
+        let error = new Discord.MessageEmbed()
+          .setAuthor({
+            name: "An error occured!",
+            iconURL: "https://i.imgur.com/PZ9qLe7.png",
+          })
+          .setDescription(genericParserErrorMessage)
+          .setColor(process.env.color_red)
+          .setTimestamp();
+
+        await message.channel.send({ embeds: [error] });
         return;
       }
 
@@ -110,7 +119,16 @@ class Scheduler {
     };
     this.snoozeReminders = async function (userId, message, messageContent) {
       if (!parser.validSnoozeString(messageContent)) {
-        await message.channel.send(genericParserErrorMessage);
+        let error = new Discord.MessageEmbed()
+          .setAuthor({
+            name: "An error occured!",
+            iconURL: "https://i.imgur.com/PZ9qLe7.png",
+          })
+          .setDescription(genericParserErrorMessage)
+          .setColor(process.env.color_red)
+          .setTimestamp();
+
+        await message.channel.send({ embeds: [error] });
         return;
       }
 
@@ -124,7 +142,16 @@ class Scheduler {
         },
         async (err, jobs) => {
           if (err) {
-            await message.channel.send(genericSchedulerErrorMessage);
+            let error = new Discord.MessageEmbed()
+              .setAuthor({
+                name: "An error occured!",
+                iconURL: "https://i.imgur.com/PZ9qLe7.png",
+              })
+              .setDescription(genericSchedulerErrorMessage)
+              .setColor(process.env.color_red)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [error] });
             return;
           } else if (jobs.length === 0) {
             let embed = new Discord.MessageEmbed()
@@ -240,7 +267,16 @@ class Scheduler {
 
       agenda.jobs({ _id: jobId }, async (err, jobs) => {
         if (err) {
-          await message.channel.send(genericSchedulerErrorMessage);
+          let error = new Discord.MessageEmbed()
+            .setAuthor({
+              name: "An error occured!",
+              iconURL: "https://i.imgur.com/PZ9qLe7.png",
+            })
+            .setDescription(genericSchedulerErrorMessage)
+            .setColor(process.env.color_red)
+            .setTimestamp();
+
+          await message.channel.send({ embeds: [error] });
           log(`reminder removal failed due to error: ${err}`);
           return;
         }
@@ -265,7 +301,16 @@ class Scheduler {
             log(`reminder removed for user ${userId}`);
           } else {
             log(`reminder removal failed due to error: ${err}`);
-            await message.channel.send(genericSchedulerErrorMessage);
+            let error = new Discord.MessageEmbed()
+              .setAuthor({
+                name: "An error occured!",
+                iconURL: "https://i.imgur.com/PZ9qLe7.png",
+              })
+              .setDescription(genericSchedulerErrorMessage)
+              .setColor(process.env.color_red)
+              .setTimestamp();
+
+            await message.channel.send({ embeds: [error] });
           }
         });
       });
