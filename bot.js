@@ -76,6 +76,18 @@ fs.readdir("./commands/", (err, files) => {
   console.log(`[Commands] Loaded ${files.length} commands!`);
 });
 
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+  for (const command of Commands) {
+    if (interaction.commandName === command.data.name) {
+      console.log(
+        `${interaction.user.username} ran command ${command.data.name}.`
+      );
+      command.run(interaction);
+    }
+  }
+});
+
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;
 let expected = Date.now() + delay;
