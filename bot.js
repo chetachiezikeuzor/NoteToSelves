@@ -1,11 +1,10 @@
 require("dotenv").config();
 const fs = require("fs");
 const mongoose = require("mongoose");
-const Discord = require("discord.js");
+const { Discord, APIMessage } = require("discord.js");
 const userSchema = require("./models/user");
-const commandFiles = fs.readdirSync("./cmds");
-const commands = [],
-  data = [];
+const Commands = [];
+const cmdFiles = readdirSync("./cmds").filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Discord.Client({
@@ -26,6 +25,29 @@ connection
   .on("error", (e) => {
     console.log("Connection error:", e);
   });
+
+client.on("ready", async () => {
+  for (const fileName of cmdFiles) {
+    const File = require(`./cmds/${fileName}`);
+    Commands.push(File);
+    await client.api.applications(client.user.id).commands.post({
+      data: {
+        name: File.name,
+        description: File.description,
+        options: File.options,
+      },
+    });
+  }
+  console.info(`Logged in as ${client.user.username}`);
+});
+
+client.ws.on("INTERACTION_CREATE", (interaction) => {
+  const CMDFile = Commands.find(
+    (cmd) => cmd.name.toLowerCase() === interaction.data.name.toLowerCase()
+  );
+  if (CMDFile)
+    CMDFile.execute(client, say, interaction, interaction.data.options);
+});
 
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
@@ -80,6 +102,27 @@ function step() {
     expected += interval;
     setTimeout(step, Math.max(0, interval - dt));
   }
+}
+
+async function say(interaction, content) {
+  return client.api
+    .interactions(interaction.id, interaction.token)
+    .callback.post({
+      data: {
+        type: 4,
+        data: await createAPIMessage(interaction, content),
+      },
+    });
+}
+
+async function createAPIMessage(interaction, content) {
+  const apiMessage = await APIMessage.create(
+    client.channels.resolve(interaction.channel_id),
+    content
+  )
+    .resolveData()
+    .resolveFiles();
+  return { ...apiMessage.data, files: apiMessage.files };
 }
 
 client.login(process.env.token);
