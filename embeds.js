@@ -11,10 +11,11 @@ exports.helpEmbed = (commands) => {
 };
 
 exports.noReminders = () => {
-  return new Discord.MessageEmbed()
+  const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_blue)
     .setTitle("Reminders List")
     .setDescription("There are no active reminders.");
+  return embed;
 };
 
 exports.error = (msg) => {
