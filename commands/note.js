@@ -73,7 +73,7 @@ exports.run = async (client, message, args) => {
       u.save();
       console.log(u.reminders);
 
-      message.lineReply("Hey")(embeds.remindersList(u.reminders, u.offset));
+      message.reply({ embeds: [embeds.remindersList(u.reminders, u.offset)] });
     }
   });
 };
