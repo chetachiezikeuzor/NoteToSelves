@@ -6,6 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("list")
     .setDescription("Lists all active reminders."),
+
   async execute(interaction) {
     if (interaction)
       userSchema.findById(interaction.user.id).then(async (u) => {

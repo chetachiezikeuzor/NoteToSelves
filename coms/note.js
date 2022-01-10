@@ -24,6 +24,7 @@ module.exports = {
         .setDescription("The time by which you'd like to be reminded.")
         .setRequired(true)
     ),
+
   async execute(interaction) {
     if (interaction)
       userSchema.findById(interaction.user.id).then(async (u) => {
