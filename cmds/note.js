@@ -14,24 +14,24 @@ module.exports = {
     description: "Sets a reminder to ping at a specific time.",
     options: [
       {
-          name: "message",
-          type: "STRING",
-          description: "The message you will get pinged with.",
-          required: true,
+        name: "message",
+        type: "STRING",
+        description: "The message you will get pinged with.",
+        required: true,
       },
       {
-          name: "time",
-          type: "STRING",
-          description: "The time by which you'd like to be reminded.",
-          required: true,
+        name: "time",
+        type: "STRING",
+        description: "The time by which you'd like to be reminded.",
+        required: true,
       },
-  ]
+    ],
   },
   run(interaction) {
     const { options, user } = interaction;
-    if(interaction)
-      let messageContent = options.substring(1);
-      let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
+    let messageContent = options.substring(1);
+    let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
+    if (interaction)
       userSchema.findById(user.id).then(async (u) => {
         if (!u) {
           await interaction.reply({
