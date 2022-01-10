@@ -29,12 +29,15 @@ module.exports = {
   },
   run(interaction) {
     const { options, user } = interaction;
-    let messageContent = options.substring(1);
-    let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
+
     //const args = options.map(option => option.value);
     console.log(options);
     if (interaction)
       userSchema.findById(user.id).then(async (u) => {
+        let messageContent = options.substring(1);
+        let parameters = messageContent.substring(
+          messageContent.indexOf(" ") + 1
+        );
         if (!u) {
           await interaction.reply({
             embeds: [
