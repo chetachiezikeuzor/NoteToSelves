@@ -51,10 +51,10 @@ fs.readdir("./commands/", (err, files) => {
 });
 */
 
-fs.readdir("./cmds/", async (err, files) => {
+fs.readdir("./cmds/", (err, files) => {
   if (err) return console.error(err);
   console.log("[Commands] Loading...");
-  files.forEach((file) => {
+  files.forEach(async (file) => {
     if (!file.endsWith(".js")) return;
     let props = require(`./cmds/${file}`);
     Commands.push(props);
