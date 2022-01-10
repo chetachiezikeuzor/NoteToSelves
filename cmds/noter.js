@@ -28,6 +28,7 @@ module.exports = {
   },
   run(interaction) {
     const { client, message, args } = interaction;
+    const args = options.map((option) => option.value);
     let messageContent = message.content.substring(1);
     let parameters = messageContent.substring(messageContent.indexOf(" ") + 1);
     userSchema.findById(message.author.id).then(async (u) => {
