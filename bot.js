@@ -40,6 +40,8 @@ client.once("ready", () => {
     Commands.push(command);
     data.push(command.data);
     client.application.commands.set(data);
+
+    console.log(`[Commands] Loaded ${file}`);
   }
 });
 
