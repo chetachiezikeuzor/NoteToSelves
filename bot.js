@@ -32,19 +32,37 @@ connection
     console.log("Connection error:", e);
   });
 
-client.on("ready", async () => {
-  for (const fileName of cmdFiles) {
-    const File = require(`./cmds/${fileName}`);
-    Commands.push(File);
-    await client.api.applications(client.user.id).commands.post({
-      data: {
-        name: File.name,
-        description: File.description,
-        options: File.options,
-      },
-    });
+client.once("ready", () => {
+  console.log("Bot started.");
+  for (const file of commandFiles) {
+    const command = require(`./cmds/${file}`);
+    Commands.push(command);
+    data.push(command.data);
   }
-  console.info(`Logged in as ${client.user.username}`);
+});
+
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isCommand()) return;
+  for (const command of Commands) {
+    if (interaction.commandName === command.data.name) {
+      console.log(
+        `${interaction.user.username} ran command ${command.data.name}.`
+      );
+      command.run(interaction);
+    }
+  }
+});
+
+client.on("messageCreate", async (message) => {
+  if (!client.application.owner) await client.application.fetch();
+
+  if (
+    message.content.toLowerCase() === "!deploy" &&
+    message.author.id === client.application.owner.id
+  ) {
+    await client.application.commands.create(data);
+    message.channel.send("Created slash commands.");
+  }
 });
 
 fs.readdir("./events/", (err, files) => {
@@ -69,18 +87,6 @@ fs.readdir("./commands/", (err, files) => {
     client.commands.set(props.help.name, props);
   });
   console.log(`[Commands] Loaded ${files.length} commands!`);
-});
-
-client.ws.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-  for (const command of Commands) {
-    if (interaction.commandName === command.data.name) {
-      console.log(
-        `${interaction.user.username} ran command ${command.data.name}.`
-      );
-      console.log("ran");
-    }
-  }
 });
 
 let interval = 60000;
