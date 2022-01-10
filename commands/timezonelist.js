@@ -34,7 +34,7 @@ exports.run = async (client, message, args) => {
 
 exports.help = {
   name: "timezonelist",
-  description: "Sets your current time zone offset from UTC (in hours).",
+  description: "Get a list of the most popular timezones..",
   cooldown: "0",
   usage: "timezonelist",
 };
