@@ -10,7 +10,7 @@ module.exports = {
   usage: "amount: <number>",
   async execute(interaction) {
     if (interaction) {
-      const amount = interaction.options.getInteger("amount");
+      const amount = parseInt(interaction.options.getString("amount"));
 
       if (amount <= 1 || amount > 100) {
         return interaction.reply({
