@@ -4,7 +4,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("purge")
     .setDescription("Purge up to 99 messages.")
-    .addIntegerOption((option) =>
+    .addStringOption((option) =>
       option.setName("amount").setDescription("Number of messages to purge")
     ),
   usage: "amount: <number>",
