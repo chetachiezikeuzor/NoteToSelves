@@ -59,21 +59,6 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
   }
 })();
 
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
-
-  try {
-    await command.execute(client, interaction);
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-/*
 fs.readdir("./events/", (err, files) => {
   if (err) return console.error(err);
   files.forEach((file) => {
@@ -82,7 +67,7 @@ fs.readdir("./events/", (err, files) => {
     client.on(eventName, event.bind(null, client));
   });
 });
-
+/*
 client.commands = new Discord.Collection();
 
 fs.readdir("./commands/", (err, files) => {
