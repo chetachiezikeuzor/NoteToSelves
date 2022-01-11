@@ -29,10 +29,6 @@ connection
     console.log("Connection error:", e);
   });
 
-client.once("ready", () => {
-  console.log("Ready!");
-});
-
 for (const file of commandFiles) {
   const command = require(`./cmds/${file}`);
   commands.push(command.data.toJSON());
@@ -43,7 +39,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
 
 (async () => {
   try {
-    console.log("Started refreshing application (/) commands.");
+    console.log("[Commands] Loading...");
 
     await rest.put(
       Routes.applicationGuildCommands(
@@ -53,7 +49,11 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
       { body: commands }
     );
 
-    console.log("Successfully reloaded application (/) commands.");
+    commands.forEach((file) => {
+      if (!file.endsWith(".js")) return;
+      console.log(`[Commands] Loaded ${file}`);
+    });
+    console.log(`[Commands] Loaded ${files.length} commands!`);
   } catch (error) {
     console.error(error);
   }
@@ -67,6 +67,7 @@ fs.readdir("./events/", (err, files) => {
     client.on(eventName, event.bind(null, client));
   });
 });
+
 /*
 client.commands = new Discord.Collection();
 
