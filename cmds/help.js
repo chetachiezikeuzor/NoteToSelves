@@ -42,8 +42,7 @@ module.exports = {
           .setTitle("About")
           .setDescription(
             `${client.user} is a discord bot that allows you to create note reminders!\nPlease look to the list of commands below to see all that you can do with the bot.\n\n Chetachi ❤️`
-          )
-          .setTimestamp();
+          );
 
         let helpSecond = new Discord.MessageEmbed()
           .setColor(process.env.color_blue)
