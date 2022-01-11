@@ -26,8 +26,6 @@ mongoose.connect(process.env.mongodbUri, {
   useUnifiedTopology: true,
 });
 
-rclient.application?.commands.cache.find((c) => c.name === "note").delete();
-
 connection
   .once("open", () => {
     console.log("MongoDB database connection established successfully");
@@ -48,6 +46,12 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
 
 (async () => {
   try {
+    await rclient.application?.commands.cache
+      .find((c) => c.name === "note")
+      .delete();
+    console.log(
+      rclient.application?.commands.cache.find((c) => c.name === "note")
+    );
     await rest.put(
       Routes.applicationGuildCommands(
         `${process.env.clientId}`,
