@@ -15,7 +15,7 @@ module.exports = {
         .addChoice("self", "self")
         .addChoice("channel", "channel")
     )
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option
         .setName("id")
         .setDescription("The reminder to remove.")
@@ -25,7 +25,7 @@ module.exports = {
   async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("for");
-      let idx = parseInt(interaction.options.getString("id"));
+      let idx = interaction.options.getInteger("id");
       const finder =
         choice == "self"
           ? userSchema.findById(interaction.user.id)

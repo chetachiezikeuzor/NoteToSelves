@@ -4,13 +4,13 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("purge")
     .setDescription("Purge up to 99 messages.")
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option.setName("amount").setDescription("Number of messages to purge")
     ),
   usage: "amount: <number>",
   async execute(client, interaction) {
     if (interaction) {
-      const amount = parseInt(interaction.options.getString("amount"));
+      const amount = interaction.options.getInteger("amount");
 
       if (amount <= 1 || amount > 100) {
         return interaction.reply({
