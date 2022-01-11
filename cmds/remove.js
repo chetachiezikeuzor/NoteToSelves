@@ -21,7 +21,7 @@ module.exports = {
         .setDescription("The reminder to remove.")
         .setRequired(true)
     ),
-  usage: "",
+  usage: "for: <string>, id: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("for");

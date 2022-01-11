@@ -15,11 +15,11 @@ module.exports = {
         .addChoice("info", "info")
         .addChoice("list", "list")
         .addChoice("note", "note")
+        .addChoice("purge", "purge")
         .addChoice("remove", "remove")
         .addChoice("timezone", "timezone")
         .addChoice("timezonelist", "timezonelist")
     ),
-  cooldown: "5",
   usage: "command: <string>",
   async execute(client, interaction) {
     if (interaction) {

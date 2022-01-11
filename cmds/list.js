@@ -16,7 +16,7 @@ module.exports = {
         .addChoice("channel", "channel")
     ),
 
-  usage: "",
+  usage: "for: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("for");

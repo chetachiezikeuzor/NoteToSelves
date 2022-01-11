@@ -23,7 +23,7 @@ module.exports = {
         .addChoice("yes", "yes")
         .addChoice("no", "no")
     ),
-  usage: "",
+  usage: "for: <string>, confirm: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("for");

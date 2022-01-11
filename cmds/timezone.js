@@ -21,7 +21,7 @@ module.exports = {
         .addChoice("self", "self")
         .addChoice("channel", "channel")
     ),
-  usage: "offset: <number>",
+  usage: "offset: <number>, for: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const offset = interaction.options.getString("offset");
