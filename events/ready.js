@@ -7,6 +7,7 @@ module.exports = (client) => {
   console.log(`Logged in as ${client.user.tag} (ID: ${client.user.id})\n`);
 
   client.user.setStatus("available");
+  console.log(client.commands);
   client.user.setPresence({
     status: "online",
     game: {
