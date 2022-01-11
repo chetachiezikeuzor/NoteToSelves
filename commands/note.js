@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
               iconURL: "https://i.imgur.com/PZ9qLe7.png",
             })
             .setDescription(
-              "Use `n!timezone` to set your time zone before you can add reminders."
+              "Use `/timezone` to set your time zone before you can add reminders."
             )
             .setColor(process.env.color_red)
             .setTimestamp(),

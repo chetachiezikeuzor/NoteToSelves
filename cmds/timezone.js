@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const userSchema = require("../models/user");
+const channelSchema = require("../models/channel");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -11,11 +12,24 @@ module.exports = {
         .setName("offset")
         .setDescription("The number used to set your offset value.")
         .setRequired(true)
+        .addStringOption((option) =>
+          option
+            .setName("for")
+            .setDescription("Where you'd like the note to be sent.")
+            .setRequired(true)
+            .addChoice("self", "self")
+            .addChoice("channel", "channel")
+        )
     ),
   usage: "offset: <number>",
   async execute(client, interaction) {
     if (interaction) {
       const offset = interaction.options.getString("offset");
+      const choice = interaction.options.getString("for");
+      const finder =
+        choice == "self"
+          ? userSchema.findById(interaction.user.id)
+          : channelSchema.findById(interaction.channel.id);
       if (isNaN(offset) || offset < -11 || offset > 14) {
         await interaction.reply({
           embeds: [
@@ -33,13 +47,20 @@ module.exports = {
         });
         return;
       }
-      userSchema.findById(interaction.user.id).then(async (u) => {
+
+      finder.then(async (u) => {
         if (!u) {
-          new userSchema({
-            _id: interaction.user.id,
-            reminders: [],
-            offset: offset,
-          }).save();
+          choice == "self"
+            ? new userSchema({
+                _id: interaction.user.id,
+                reminders: [],
+                offset: offset,
+              }).save()
+            : new channelSchema({
+                _id: interaction.channel.id,
+                reminders: [],
+                offset: offset,
+              }).save();
         } else {
           u.offset = offset;
           u.save();
@@ -51,7 +72,9 @@ module.exports = {
             iconURL: "https://i.imgur.com/qLS6esg.png",
           })
           .setColor(process.env.color_blue)
-          .setDescription(`Your time zone is now \`${offset}\` hours from UTC.`)
+          .setDescription(
+            `The time zone is has been set to \`${offset}\`\nhours from UTC.`
+          )
           .setColor(process.env.color_blue)
           .setTimestamp();
 
