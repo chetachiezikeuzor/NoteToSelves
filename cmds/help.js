@@ -60,7 +60,9 @@ module.exports = {
           .then(() =>
             interaction.user
               .send({ embeds: [helpSecond] })
-              .then(() => interaction.reply({ embeds: [embed] }))
+              .then(() =>
+                interaction.reply({ embeds: [embed], ephemeral: true })
+              )
           )
           .catch(() => {
             let error = new Discord.MessageEmbed()
