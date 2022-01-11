@@ -27,14 +27,10 @@ module.exports = {
         });
       });
 
-      return interaction
-        .reply({
-          content: `Successfully purged \`${amount}\` messages.`,
-          ephemeral: true,
-        })
-        .then((msg) => {
-          msg.delete({ timeout: 10000 });
-        });
+      return interaction.reply({
+        content: `Successfully purged \`${amount}\` messages.`,
+        ephemeral: true,
+      });
     }
   },
 };

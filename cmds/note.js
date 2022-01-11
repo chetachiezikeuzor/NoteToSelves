@@ -48,44 +48,36 @@ module.exports = {
 
       finder.then(async (u) => {
         if (!u) {
-          await interaction
-            .reply({
+          await interaction.reply({
+            embeds: [
+              new Discord.MessageEmbed()
+                .setAuthor({
+                  name: "An error occured!",
+                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
+                })
+                .setDescription(
+                  "Use `/timezone` to set your time zone before you can add reminders."
+                )
+                .setColor(process.env.color_red)
+                .setTimestamp(),
+            ],
+            ephemeral: true,
+          });
+        } else {
+          if (!parser.validReminderString(parameters)) {
+            await interaction.reply({
               embeds: [
                 new Discord.MessageEmbed()
                   .setAuthor({
                     name: "An error occured!",
                     iconURL: "https://i.imgur.com/PZ9qLe7.png",
                   })
-                  .setDescription(
-                    "Use `/timezone` to set your time zone before you can add reminders."
-                  )
+                  .setDescription(genericParserErrorMessage)
                   .setColor(process.env.color_red)
                   .setTimestamp(),
               ],
               ephemeral: true,
-            })
-            .then((msg) => {
-              msg.delete({ timeout: 10000 });
             });
-        } else {
-          if (!parser.validReminderString(parameters)) {
-            await interaction
-              .reply({
-                embeds: [
-                  new Discord.MessageEmbed()
-                    .setAuthor({
-                      name: "An error occured!",
-                      iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                    })
-                    .setDescription(genericParserErrorMessage)
-                    .setColor(process.env.color_red)
-                    .setTimestamp(),
-                ],
-                ephemeral: true,
-              })
-              .then((msg) => {
-                msg.delete({ timeout: 10000 });
-              });
             return;
           }
 
@@ -97,25 +89,21 @@ module.exports = {
           };
 
           if (reminder.date <= new Date().getTime()) {
-            await interaction
-              .reply({
-                embeds: [
-                  new Discord.MessageEmbed()
-                    .setAuthor({
-                      name: "An error occured!",
-                      iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                    })
-                    .setDescription(
-                      "The time for this reminder has already passed."
-                    )
-                    .setColor(process.env.color_red)
-                    .setTimestamp(),
-                ],
-                ephemeral: true,
-              })
-              .then((msg) => {
-                msg.delete({ timeout: 10000 });
-              });
+            await interaction.reply({
+              embeds: [
+                new Discord.MessageEmbed()
+                  .setAuthor({
+                    name: "An error occured!",
+                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
+                  })
+                  .setDescription(
+                    "The time for this reminder has already passed."
+                  )
+                  .setColor(process.env.color_red)
+                  .setTimestamp(),
+              ],
+              ephemeral: true,
+            });
             return;
           }
 
