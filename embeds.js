@@ -58,7 +58,7 @@ exports.remindersList = (reminders, offset, choice) => {
     .setColor(process.env.color_blue)
     .setTitle("Reminders List")
     .setDescription(
-      `Here is ${(choice = "self" ? `your` : `the channel's`)} reminders list:`
+      `Here is ${(`${choice}` = "self" ? `your` : `the channel's`)} reminders list:`
     );
   if (reminders.length === 0)
     embed.setDescription("There are no active reminders.");
