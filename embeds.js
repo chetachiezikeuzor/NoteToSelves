@@ -53,11 +53,13 @@ exports.updateOffset = (offset) => {
     .setDescription(`Your time zone is now \`${offset}\` hours from UTC.`);
 };
 
-exports.remindersList = (reminders, offset) => {
+exports.remindersList = (reminders, offset, choice) => {
   const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_blue)
     .setTitle("Reminders List")
-    .setDescription(`Here is your reminders list:`);
+    .setDescription(
+      `Here is ${choice === "self" ? `your` : `the channel's`} reminders list:`
+    );
   if (reminders.length === 0)
     embed.setDescription("There are no active reminders.");
   else

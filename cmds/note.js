@@ -120,9 +120,11 @@ module.exports = {
             .setDescription(
               `Hey **<@${interaction.user.tag}>**,\non **${reminderTime.format(
                 dateFormatString
-              )}**,\n${(choice = "self"
-                ? `I will remind you`
-                : `I will remind this channel`)}: **"${reminder.message}"**`
+              )}**,\n${
+                choice === "self"
+                  ? `I will remind you`
+                  : `I will remind this channel`
+              }: **"${reminder.message}"**`
             )
             .setColor(process.env.color_blue)
             .setTimestamp();
