@@ -26,7 +26,7 @@ mongoose.connect(process.env.mongodbUri, {
   useUnifiedTopology: true,
 });
 
-rclient.application.commands.cache.find((c) => c.name === "note").delete();
+rclient.application?.commands.cache.find((c) => c.name === "note").delete();
 
 connection
   .once("open", () => {
