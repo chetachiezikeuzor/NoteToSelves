@@ -120,9 +120,10 @@ module.exports = {
             })
             .setColor(process.env.color_blue)
             .setDescription(
-              `On **${reminderTime.format(
-                dateFormatString
-              )}**,\nI will remind you: **"${reminder.message}"**`
+              `On **${reminderTime.format(dateFormatString)}**,\n${(choice =
+                "self"
+                  ? `I will remind you`
+                  : `I will remind this channel`)}: **"${reminder.message}"**`
             )
             .setColor(process.env.color_blue)
             .setTimestamp();

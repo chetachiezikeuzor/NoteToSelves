@@ -16,7 +16,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("for")
-        .setDescription("Where you'd like the note to be sent.")
+        .setDescription("Where you'd like the timezone to be set.")
         .setRequired(true)
         .addChoice("self", "self")
         .addChoice("channel", "channel")
