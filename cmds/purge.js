@@ -8,7 +8,7 @@ module.exports = {
       option.setName("amount").setDescription("Number of messages to purge")
     ),
   usage: "amount: <number>",
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       const amount = parseInt(interaction.options.getString("amount"));
 
