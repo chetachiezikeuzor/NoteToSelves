@@ -5,9 +5,7 @@ module.exports = (client) => {
     `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
   );
   console.log(`Logged in as ${client.user.tag} (ID: ${client.user.id})\n`);
-
   client.user.setStatus("available");
-  console.log(client.commands);
   client.user.setPresence({
     status: "online",
     game: {
