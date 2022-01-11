@@ -14,7 +14,8 @@ exports.noReminders = () => {
   const embed = new Discord.MessageEmbed()
     .setColor(process.env.color_blue)
     .setTitle("Reminders List")
-    .setDescription("There are no active reminders.");
+    .setDescription("There are no active reminders.")
+    .setTimestamp();
   return embed;
 };
 
@@ -22,7 +23,8 @@ exports.error = (msg) => {
   return new Discord.MessageEmbed()
     .setColor(process.env.color_red)
     .setTitle("Error")
-    .setDescription(`${msg}`);
+    .setDescription(`${msg}`)
+    .setTimestamp();
 };
 
 exports.addReminder = (reminder) => {
@@ -30,27 +32,30 @@ exports.addReminder = (reminder) => {
     .setColor(process.env.color_green)
     .setTitle("Reminder Set Successfully");
   embed.addField("Message", reminder.msg, true);
-  embed.addField("Date", reminder.dateStr, true);
+  embed.addField("Date", reminder.dateStr, true).setTimestamp();
   return embed;
 };
 
 exports.removeReminder = () => {
   return new Discord.MessageEmbed()
     .setColor(process.env.color_green)
-    .setTitle("Reminder Removed Successfully");
+    .setTitle("Reminder Removed Successfully")
+    .setTimestamp();
 };
 
 exports.removeAllReminders = () => {
   return new Discord.MessageEmbed()
     .setColor(process.env.color_green)
-    .setTitle("All Reminders Removed Successfully");
+    .setTitle("All Reminders Removed Successfully")
+    .setTimestamp();
 };
 
 exports.updateOffset = (offset) => {
   return new Discord.MessageEmbed()
     .setColor(process.env.color_green)
     .setTitle("Time Zone Offset Updated Successfully")
-    .setDescription(`Your time zone is now \`${offset}\` hours from UTC.`);
+    .setDescription(`Your time zone is now \`${offset}\` hours from UTC.`)
+    .setTimestamp();
 };
 
 exports.remindersList = (reminders, offset, choice) => {
@@ -59,7 +64,8 @@ exports.remindersList = (reminders, offset, choice) => {
     .setTitle("Reminders List")
     .setDescription(
       `Here is ${choice === "self" ? `your` : `the channel's`} reminders list:`
-    );
+    )
+    .setTimestamp();
   if (reminders.length === 0)
     embed.setDescription("There are no active reminders.");
   else

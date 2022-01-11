@@ -57,13 +57,15 @@ module.exports = {
           const embed = new Discord.MessageEmbed()
             .setColor(process.env.color_blue)
             .setTitle("No Reminders")
-            .setDescription("There are no reminders to clear.");
+            .setDescription("There are no reminders to clear.")
+            .setTimestamp();
           await interaction.reply({ embeds: [embed] });
         } else if (!u) {
           const embed = new Discord.MessageEmbed()
             .setColor(process.env.color_blue)
             .setTitle("Cancel")
-            .setDescription("No worries! I won't clear anything.");
+            .setDescription("No worries! I won't clear anything.")
+            .setTimestamp();
           await interaction.reply({ embeds: [embed] });
         }
       });

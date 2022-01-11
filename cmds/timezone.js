@@ -68,12 +68,14 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
           .setAuthor({
-            name: `Hey ${interaction.user.tag},`,
+            name: `Timezone Set`,
             iconURL: "https://i.imgur.com/qLS6esg.png",
           })
           .setColor(process.env.color_blue)
           .setDescription(
-            `The time zone is has been set to \`${offset}\`\nhours from UTC.`
+            `${
+              choice === "self" ? `Your` : `The`
+            } time zone is has been set to \`${offset}\`\nhours from UTC.`
           )
           .setColor(process.env.color_blue)
           .setTimestamp();

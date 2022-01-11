@@ -32,14 +32,16 @@ module.exports = {
             iconURL: interaction.user.avatarURL(),
           })
           .setColor(process.env.color_blue)
-          .setDescription(`I've sent the help menu to your DMs!`);
+          .setDescription(`I've sent the help menu to your DMs!`)
+          .setTimestamp();
 
         let helpFirst = new Discord.MessageEmbed()
           .setColor(process.env.color_blue)
           .setTitle("About")
           .setDescription(
             `${client.user} is a discord bot that allows you to create note reminders!\nPlease look to the list of commands below to see all that you can do with the bot.\n\n Chetachi ❤️`
-          );
+          )
+          .setTimestamp();
 
         let helpSecond = new Discord.MessageEmbed()
           .setColor(process.env.color_blue)
@@ -49,7 +51,8 @@ module.exports = {
               client.commands
                 .map((cmd) => `\`${cmd.data.name}\` - ${cmd.data.description}`)
                 .join("\n")
-          );
+          )
+          .setTimestamp();
 
         return interaction.user
           .send({ embeds: [helpFirst] })
@@ -81,7 +84,8 @@ module.exports = {
           .setColor(process.env.color_blue)
           .setDescription(
             `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** \`${process.env.prefix}${props.data.name} ${props.usage}\``
-          );
+          )
+          .setTimestamp();
 
         interaction.reply({ embeds: [embed] });
       }
