@@ -30,6 +30,7 @@ connection
   });
 
 for (const file of commandFiles) {
+  console.log("[Commands] Loading...");
   const command = require(`./cmds/${file}`);
   commands.push(command.data.toJSON());
   console.log(`[Commands] Loaded ${command.data.name}`);
@@ -40,8 +41,6 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
 
 (async () => {
   try {
-    console.log("[Commands] Loading...");
-
     await rest.put(
       Routes.applicationGuildCommands(
         `${process.env.clientId}`,
@@ -64,24 +63,6 @@ fs.readdir("./events/", (err, files) => {
     client.on(eventName, event.bind(null, client));
   });
 });
-
-/*
-client.commands = new Discord.Collection();
-
-fs.readdir("./commands/", (err, files) => {
-  if (err) return console.error(err);
-  console.log("[Commands] Loading...");
-  files.forEach((file) => {
-    if (!file.endsWith(".js")) return;
-    let props = require(`./commands/${file}`);
-    console.log(`[Commands] Loaded ${file}`);
-
-    client.commands.set(props.help.name, props);
-  });
-  console.log(`[Commands] Loaded ${files.length} commands!`);
-});*/
-
-//setInterval(checkForReminders, 10000);
 
 let interval = 60000;
 let delay = (60 - new Date().getSeconds()) * 1000;

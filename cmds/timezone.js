@@ -12,7 +12,7 @@ module.exports = {
         .setDescription("The number used to set your offset value.")
         .setRequired(true)
     ),
-
+  usage: "offset: <number>",
   async execute(client, interaction) {
     if (interaction) {
       const offset = interaction.options.getString("offset");

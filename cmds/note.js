@@ -33,7 +33,7 @@ module.exports = {
         .addChoice("self", "self")
         .addChoice("channel", "channel")
     ),
-
+  usage: "message: <string>, time: <string>, to: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const parameters = `${interaction.options.getString(

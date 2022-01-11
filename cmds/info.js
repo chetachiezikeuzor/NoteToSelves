@@ -11,7 +11,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("info")
     .setDescription("Get information about the bot."),
-
+  usage: "",
   async execute(client, interaction) {
     if (interaction) {
       let botping = new Date() - interaction.createdAt;

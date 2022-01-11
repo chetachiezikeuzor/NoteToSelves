@@ -20,7 +20,7 @@ module.exports = {
         .addChoice("timezone", "timezone")
         .addChoice("timezonelist", "timezonelist")
     ),
-
+  usage: "command: <string>",
   async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("command");
@@ -80,7 +80,7 @@ module.exports = {
           .setTitle(`Command`)
           .setColor(process.env.color_blue)
           .setDescription(
-            `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** ${process.env.prefix}`
+            `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** \`${process.env.prefix}${props.data.usage}\``
           );
 
         interaction.reply({ embeds: [embed] });

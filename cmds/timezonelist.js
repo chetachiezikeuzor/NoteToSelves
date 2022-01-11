@@ -8,7 +8,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("timezonelist")
     .setDescription("Lists most popular timezones."),
-
+  usage: "",
   async execute(client, interaction) {
     if (interaction) {
       let embed = new Discord.MessageEmbed()

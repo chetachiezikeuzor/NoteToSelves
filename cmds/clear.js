@@ -6,7 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("clear")
     .setDescription("Removes all active reminders."),
-
+  usage: "",
   async execute(client, interaction) {
     if (interaction) {
       userSchema.findById(interaction.user.id).then(async (u) => {
