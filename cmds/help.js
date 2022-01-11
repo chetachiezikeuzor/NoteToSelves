@@ -80,7 +80,7 @@ module.exports = {
           .setTitle(`Command`)
           .setColor(process.env.color_blue)
           .setDescription(
-            `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** \`${process.env.prefix}${props.data.usage}\``
+            `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** \`${process.env.prefix}${props.usage}\``
           );
 
         interaction.reply({ embeds: [embed] });
