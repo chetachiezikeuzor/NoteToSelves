@@ -4,9 +4,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("reload")
-    .setDescription(
-      "Displays the help menu or gets information about a command."
-    )
+    .setDescription("Reloads a specific command.")
     .addStringOption((option) =>
       option
         .setName("command")
