@@ -22,7 +22,7 @@ module.exports = {
       let mins = Math.floor((totalSeconds / 60) % 60);
       let used = process.memoryUsage().heapUsed / 1024 / 1024;
 
-      const cmdArr = [...client.commands].map(([name, value]) => ({
+      const cmdArr = [...interaction.client.commands].map(([name, value]) => ({
         name,
         value,
       }));
@@ -37,10 +37,12 @@ module.exports = {
             process.env.prefix
           }\`\nVersion - \`v${packageFile.version}\`\nCommands - \`${
             cmdArr.length - 1
-          }\`\nGuilds - \`${client.guilds.cache.size}\`\nChannels - \`${
-            client.channels.cache.size
+          }\`\nGuilds - \`${
+            interaction.client.guilds.cache.size
+          }\`\nChannels - \`${
+            interaction.client.channels.cache.size
           }\`\nUsers - \`${
-            client.users.cache.size
+            interaction.client.users.cache.size
           }\`\nUptime - \`${days}d ${hours}h ${mins}m ${realTotalSecs}s\`\nMemory Usage - \`${
             Math.round(used * 100) / 100
           }MB\`\nAPI Ping - \`${Math.floor(botping)}ms\`\n`
