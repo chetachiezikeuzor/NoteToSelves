@@ -7,17 +7,18 @@ const Discord = require("discord.js");
 const userSchema = require("./models/user");
 const channelSchema = require("./models/channel");
 const { Client, Intents } = require("discord.js");
-const commands = [];
+const commands = [],
+  data = [];
 const commandFiles = fs
   .readdirSync("./cmds/")
+  .filter((file) => file.endsWith(".js"));
+const cmdFiles = fs
+  .readdirSync("./commands/")
   .filter((file) => file.endsWith(".js"));
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const rclient = new Discord.Client({
-  disableMentions: "everyone",
-  intents: ["GUILDS", "GUILD_MESSAGES"],
-});
+
 client.config = config.content;
 client.commands = new Discord.Collection();
 
@@ -51,13 +52,6 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
         `${process.env.clientId}`,
         `${process.env.sw_guildId}`
       ),
-      { body: [] }
-    );
-    await rest.put(
-      Routes.applicationGuildCommands(
-        `${process.env.clientId}`,
-        `${process.env.sw_guildId}`
-      ),
       { body: commands }
     );
 
@@ -82,6 +76,39 @@ fs.readdir("./events/", (err, files) => {
     let eventName = file.split(".")[0];
     client.on(eventName, event.bind(null, client));
   });
+});
+
+client.once("ready", () => {
+  console.log("Bot started.");
+  for (const file of cmdFiles) {
+    const command = require(`./commands/${file}`);
+    commands.push(command);
+    data.push(command.data);
+  }
+});
+
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isCommand()) return;
+  for (const command of commands) {
+    if (interaction.commandName === command.data.name) {
+      console.log(
+        `${interaction.user.username} ran command ${command.data.name}.`
+      );
+      command.run(interaction);
+    }
+  }
+});
+
+client.on("messageCreate", async (message) => {
+  if (!client.application.owner) await client.application.fetch();
+
+  if (
+    message.content.toLowerCase() === "!deploy" &&
+    message.author.id === client.application.owner.id
+  ) {
+    await client.application.commands.create(data);
+    message.channel.send("Created slash commands.");
+  }
 });
 
 let interval = 60000;
