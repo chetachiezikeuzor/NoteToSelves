@@ -57,7 +57,7 @@ exports.run = async (client, message, args) => {
       .setTitle(`Command`)
       .setColor(process.env.color_blue)
       .setDescription(
-        `**Name:** ${props.help.name}\n**Description:** ${props.help.description}\n**Cooldown:** ${props.help.cooldown} seconds\n**Usage:** ${process.env.prefix}${props.help.usage}`
+        `**Name:** ${props.help.name}\n**Description:** ${props.help.description}\n**Cooldown:** ${props.help.cooldown} seconds\n**Usage:** ${process.env.prefix}${props.usage}`
       );
 
     message.channel.send({ embeds: [embed] });
