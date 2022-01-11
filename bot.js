@@ -5,6 +5,7 @@ const { Routes } = require("discord-api-types/v9");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
+const channelSchema = require("../models/channel");
 const { Client, Intents } = require("discord.js");
 const commands = [];
 const commandFiles = fs
@@ -88,7 +89,16 @@ function step() {
           if (user.reminders[i].date <= now.getTime()) {
             let m = user.reminders[i].msg;
             client.users.fetch(user._id).then((u) => {
-              u.send(`<@${u.id}> ${m}`);
+              let embed = new Discord.MessageEmbed()
+                .setAuthor({
+                  name: "Reminder",
+                  iconURL: `https://i.imgur.com/qLS6esg.png`,
+                })
+                .setColor(process.env.color_blue)
+                .setDescription(`Hey **<@${u.id}>**, remember **"${m}"**.`)
+                .setTimestamp();
+
+              u.send({ embeds: [embed] });
               console.log(u.username + ' was sent the reminder "' + m + '"');
             });
             user.reminders.splice(i, 1);
@@ -96,6 +106,32 @@ function step() {
           }
         }
         user.save();
+      }
+    });
+
+    channelSchema.find().then((channelList) => {
+      for (const channel of channelList) {
+        for (let i = 0; i < channel.reminders.length; i++) {
+          if (channel.reminders[i].date <= now.getTime()) {
+            let m = channel.reminders[i].msg;
+            client.channels.fetch(channel._id).then((c) => {
+              let embed = new Discord.MessageEmbed()
+                .setAuthor({
+                  name: "Reminder",
+                  iconURL: `https://i.imgur.com/qLS6esg.png`,
+                })
+                .setColor(process.env.color_blue)
+                .setDescription(`**<#${c.id}>**, remember **"${m}"**.`)
+                .setTimestamp();
+
+              c.send({ embeds: [embed] });
+              console.log(c.name + ' was sent the reminder "' + m + '"');
+            });
+            channel.reminders.splice(i, 1);
+            i--;
+          }
+        }
+        channel.save();
       }
     });
     expected += interval;
