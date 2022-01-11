@@ -47,7 +47,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
         `${process.env.clientId}`,
         `${process.env.sw_guildId}`
       ),
-      { body: [] }
+      { body: commands }
     );
 
     await rest.put(
@@ -55,7 +55,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
         `${process.env.clientId}`,
         `${process.env.c_guildId}`
       ),
-      { body: [] }
+      { body: commands }
     );
 
     console.log(`[Commands] Loaded ${commands.length} commands!`);
