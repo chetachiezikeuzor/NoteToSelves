@@ -13,7 +13,7 @@ module.exports = {
         .setRequired(true)
     ),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       const offset = interaction.options.getString("offset");
       if (isNaN(offset) || offset < -11 || offset > 14) {

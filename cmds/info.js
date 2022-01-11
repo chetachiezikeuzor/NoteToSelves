@@ -12,7 +12,7 @@ module.exports = {
     .setName("info")
     .setDescription("Get information about the bot."),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       let botping = new Date() - interaction.createdAt;
       let totalSeconds = process.uptime();

@@ -7,7 +7,7 @@ module.exports = {
     .setName("list")
     .setDescription("Lists all active reminders."),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       userSchema.findById(interaction.user.id).then(async (u) => {
         if (!u) {

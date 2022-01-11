@@ -34,7 +34,7 @@ module.exports = {
         .addChoice("channel", "channel")
     ),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       const parameters = `${interaction.options.getString(
         "message"

@@ -59,7 +59,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
   }
 })();
 
-client.on("interactionCreate", async (interaction) => {
+client.on("interactionCreate", async (client, interaction) => {
   if (!interaction.isCommand()) return;
 
   const command = client.commands.get(interaction.commandName);

@@ -21,7 +21,7 @@ module.exports = {
         .addChoice("timezonelist", "timezonelist")
     ),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("command");
 
@@ -38,7 +38,7 @@ module.exports = {
           .setColor(process.env.color_blue)
           .setTitle("About")
           .setDescription(
-            `${interaction.client.user} is a discord bot that allows you to create note reminders!\nPlease look to the list of commands below to see all that you can do with the bot.\n\n Chetachi ❤️`
+            `${client.user} is a discord bot that allows you to create note reminders!\nPlease look to the list of commands below to see all that you can do with the bot.\n\n Chetachi ❤️`
           );
 
         let helpSecond = new Discord.MessageEmbed()
@@ -46,7 +46,7 @@ module.exports = {
           .setTitle("Commands")
           .setDescription(
             `Type \`${process.env.prefix}help [command]\` to get information about a command.\n\n` +
-              interaction.client.commands
+              client.commands
                 .filter((cmd) => !cmd.dev)
                 .map((cmd) => `\`${cmd.name}\` - ${cmd.description}`)
                 .join("\n")
@@ -72,7 +72,7 @@ module.exports = {
             return interaction.reply({ embeds: [error] });
           });
       } else if (choice) {
-        let command = interaction.client.commands.get(choice);
+        let command = client.commands.get(choice);
         if (!command) return interaction.reply("Please enter a valid command!");
 
         let props = require(`./${choice}.js`);

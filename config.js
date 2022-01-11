@@ -1,7 +1,7 @@
 exports.content = {
   token: process.env.TOKEN,
   mongodbUri: process.env.MONGODB_URI,
-  prefix: "n!",
+  prefix: "/",
   activityMessage: "beautiful photos. | n!help",
   activityType: "WATCHING",
   colors: {

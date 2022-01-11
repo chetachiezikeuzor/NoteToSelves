@@ -9,7 +9,7 @@ module.exports = {
     .setName("timezonelist")
     .setDescription("Lists most popular timezones."),
 
-  async execute(interaction) {
+  async execute(client, interaction) {
     if (interaction) {
       let embed = new Discord.MessageEmbed()
         .setColor(process.env.color_gray)
