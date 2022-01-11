@@ -5,7 +5,7 @@ const { Routes } = require("discord-api-types/v9");
 const mongoose = require("mongoose");
 const Discord = require("discord.js");
 const userSchema = require("./models/user");
-const { Client, Collection, Intents } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const commands = [];
 const commandFiles = fs
   .readdirSync("./cmds/")
@@ -50,9 +50,9 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
     );
 
     commands.forEach((file) => {
-      console.log(`[Commands] Loaded ${file}`);
+      console.log(`[Commands] Loaded ${file.data.name}`);
     });
-    console.log(`[Commands] Loaded ${files.length} commands!`);
+    console.log(`[Commands] Loaded ${commands.length} commands!`);
   } catch (error) {
     console.error(error);
   }
