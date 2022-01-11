@@ -59,7 +59,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
   }
 })();
 
-client.on("interactionCreate", async (client, interaction) => {
+client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
   const command = client.commands.get(interaction.commandName);
@@ -67,7 +67,7 @@ client.on("interactionCreate", async (client, interaction) => {
   if (!command) return;
 
   try {
-    await command.execute(interaction);
+    await command.execute(client, interaction);
   } catch (error) {
     console.error(error);
   }
