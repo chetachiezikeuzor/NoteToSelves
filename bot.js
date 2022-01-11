@@ -31,26 +31,13 @@ connection
     console.log("Connection error:", e);
   });
 
-fs.readdir("./cmds/", (err, files) => {
-  if (err) return console.error(err);
-  console.log("[Commands] Loading...");
-  files.forEach((file) => {
-    if (!file.endsWith(".js")) return;
-    const command = require(`./cmds/${file}`);
-    commands.push(command.data.toJSON());
-    console.log(`[Commands] Loaded ${file}`);
-    client.commands.set(command.data.name, command);
-  });
-  console.log(`[Commands] Loaded ${files.length} commands!`);
-});
-/*
+console.log("[Commands] Loading...");
 for (const file of commandFiles) {
-  console.log("[Commands] Loading...");
   const command = require(`./cmds/${file}`);
   commands.push(command.data.toJSON());
   console.log(`[Commands] Loaded ${command.data.name}`);
   client.commands.set(command.data.name, command);
-}*/
+}
 
 const rest = new REST({ version: "9" }).setToken(process.env.token);
 
