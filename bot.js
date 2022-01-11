@@ -50,7 +50,6 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
     );
 
     commands.forEach((file) => {
-      if (!file.endsWith(".js")) return;
       console.log(`[Commands] Loaded ${file}`);
     });
     console.log(`[Commands] Loaded ${files.length} commands!`);
