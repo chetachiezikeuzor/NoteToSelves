@@ -71,7 +71,9 @@ module.exports = {
               .setColor(process.env.color_blue)
               .setTimestamp();
 
-            return interaction.reply({ embeds: [error] });
+            return interaction.reply({ embeds: [error] }).then((msg) => {
+              msg.delete({ timeout: 10000 });
+            });
           });
       } else if (choice) {
         let command = client.commands.get(choice);

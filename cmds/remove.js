@@ -33,20 +33,24 @@ module.exports = {
 
       finder.then(async (u) => {
         if (!u || isNaN(idx) || idx < 0 || idx >= u.reminders.length) {
-          await message.channel.send({
-            embeds: [
-              new Discord.MessageEmbed()
-                .setAuthor({
-                  name: "An error occured!",
-                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                })
-                .setDescription(
-                  "Invalid id. The id should be an integer obtained from the `list` command."
-                )
-                .setColor(process.env.color_red)
-                .setTimestamp(),
-            ],
-          });
+          await interaction
+            .reply({
+              embeds: [
+                new Discord.MessageEmbed()
+                  .setAuthor({
+                    name: "An error occured!",
+                    iconURL: "https://i.imgur.com/PZ9qLe7.png",
+                  })
+                  .setDescription(
+                    "Invalid id. The id should be an integer obtained from the `list` command."
+                  )
+                  .setColor(process.env.color_red)
+                  .setTimestamp(),
+              ],
+            })
+            .then((msg) => {
+              msg.delete({ timeout: 10000 });
+            });
           return;
         } else {
           u.reminders.splice(idx, 1);
