@@ -114,16 +114,15 @@ module.exports = {
           console.log(u.reminders);
 
           let embed = new Discord.MessageEmbed()
-            .setAuthor({
-              name: `Hey ${interaction.user.tag},`,
-              iconURL: "https://i.imgur.com/qLS6esg.png",
-            })
+            .setColor(process.env.color_blue)
+            .setTitle("Reminder Set")
             .setColor(process.env.color_blue)
             .setDescription(
-              `On **${reminderTime.format(dateFormatString)}**,\n${(choice =
-                "self"
-                  ? `I will remind you`
-                  : `I will remind this channel`)}: **"${reminder.message}"**`
+              `Hey **<@${interaction.user.tag}>**,\non **${reminderTime.format(
+                dateFormatString
+              )}**,\n${(choice = "self"
+                ? `I will remind you`
+                : `I will remind this channel`)}: **"${reminder.message}"**`
             )
             .setColor(process.env.color_blue)
             .setTimestamp();
