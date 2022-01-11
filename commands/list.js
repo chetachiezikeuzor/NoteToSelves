@@ -9,10 +9,11 @@ exports.run = async (client, message, args) => {
       console.log(u.reminders);
       if (u.reminders.length == 0)
         message.reply({ embeds: [embeds.noReminders()] });
-      else
+      else {
         message.reply({
           embeds: [embeds.remindersList(u.reminders, u.offset, choice)],
         });
+      }
     }
   });
 };
