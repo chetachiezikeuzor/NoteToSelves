@@ -17,6 +17,8 @@ module.exports = {
         .addChoice("info", "info")
         .addChoice("list", "list")
         .addChoice("note", "note")
+        .addChoice("purge", "purge")
+        .addChoice("remove", "remove")
         .addChoice("timezone", "timezone")
         .addChoice("timezonelist", "timezonelist")
     ),
