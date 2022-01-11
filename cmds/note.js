@@ -118,9 +118,9 @@ module.exports = {
             .setTitle("Reminder Set")
             .setColor(process.env.color_blue)
             .setDescription(
-              `Hey **<@${interaction.user.tag}>**,\non **${reminderTime.format(
+              `Hey **<@${interaction.user.tag}>**,on **${reminderTime.format(
                 dateFormatString
-              )}**,\n${
+              )}**\n${
                 choice === "self"
                   ? `I will remind you`
                   : `I will remind this channel`

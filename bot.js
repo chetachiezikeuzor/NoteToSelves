@@ -14,6 +14,10 @@ const commandFiles = fs
 const config = require("./config.js");
 const connection = mongoose.connection;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const rclient = new Discord.Client({
+  disableMentions: "everyone",
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+});
 client.config = config.content;
 client.commands = new Discord.Collection();
 
@@ -21,6 +25,8 @@ mongoose.connect(process.env.mongodbUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+rclient.application.commands.cache.find((c) => c.name === "note").delete();
 
 connection
   .once("open", () => {
