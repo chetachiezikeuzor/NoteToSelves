@@ -1,5 +1,9 @@
 const Discord = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const client = new Discord.Client({
+  disableMentions: "everyone",
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+});
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,7 +25,7 @@ module.exports = {
         .addChoice("timezonelist", "timezonelist")
     ),
 
-  async execute(client, interaction) {
+  async execute(clientt, interaction) {
     if (interaction) {
       const choice = interaction.options.getString("command");
 
