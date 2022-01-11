@@ -35,7 +35,7 @@ module.exports = {
             await interaction.reply({ embeds: [embeds.noReminders()] });
           else
             await interaction.reply({
-              embeds: [embeds.remindersList(u.reminders, u.offset)],
+              embeds: [embeds.remindersList(u.reminders, u.offset, choice)],
             });
         }
       });

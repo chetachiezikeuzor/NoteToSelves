@@ -11,7 +11,7 @@ exports.run = async (client, message, args) => {
         message.reply({ embeds: [embeds.noReminders()] });
       else
         message.reply({
-          embeds: [embeds.remindersList(u.reminders, u.offset)],
+          embeds: [embeds.remindersList(u.reminders, u.offset, choice)],
         });
     }
   });

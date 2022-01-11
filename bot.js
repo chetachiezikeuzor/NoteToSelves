@@ -44,7 +44,15 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
     await rest.put(
       Routes.applicationGuildCommands(
         `${process.env.clientId}`,
-        `${process.env.guildId}`
+        `${process.env.sw_guildId}`
+      ),
+      { body: commands }
+    );
+
+    await rest.put(
+      Routes.applicationGuildCommands(
+        `${process.env.clientId}`,
+        `${process.env.c_guildId}`
       ),
       { body: commands }
     );
