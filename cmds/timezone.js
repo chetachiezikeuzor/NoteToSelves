@@ -12,14 +12,14 @@ module.exports = {
         .setName("offset")
         .setDescription("The number used to set your offset value.")
         .setRequired(true)
-        .addStringOption((option) =>
-          option
-            .setName("for")
-            .setDescription("Where you'd like the note to be sent.")
-            .setRequired(true)
-            .addChoice("self", "self")
-            .addChoice("channel", "channel")
-        )
+    )
+    .addStringOption((option) =>
+      option
+        .setName("for")
+        .setDescription("Where you'd like the note to be sent.")
+        .setRequired(true)
+        .addChoice("self", "self")
+        .addChoice("channel", "channel")
     ),
   usage: "offset: <number>",
   async execute(client, interaction) {
