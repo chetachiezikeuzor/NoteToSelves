@@ -47,8 +47,7 @@ module.exports = {
           .setDescription(
             `Type \`${process.env.prefix}help [command]\` to get information about a command.\n\n` +
               client.commands
-                .filter((cmd) => !cmd.dev)
-                .map((cmd) => `\`${cmd.name}\` - ${cmd.description}`)
+                .map((cmd) => `\`${cmd.data.name}\` - ${cmd.data.description}`)
                 .join("\n")
           );
 
@@ -81,7 +80,7 @@ module.exports = {
           .setTitle(`Command`)
           .setColor(process.env.color_blue)
           .setDescription(
-            `**Name:** ${props.name}\n**Description:** ${props.description}\n**Usage:** ${process.env.prefix}${props.usage}`
+            `**Name:** ${props.data.name}\n**Description:** ${props.data.description}\n**Usage:** ${process.env.prefix}${props.usage}`
           );
 
         interaction.reply({ embeds: [embed] });
