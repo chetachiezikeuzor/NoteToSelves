@@ -31,25 +31,22 @@ module.exports = {
           ? userSchema.findById(interaction.user.id)
           : channelSchema.findById(interaction.channel.id);
       if (isNaN(offset) || offset < -11 || offset > 14) {
-        await interaction
-          .reply({
-            embeds: [
-              new Discord.MessageEmbed()
-                .setAuthor({
-                  name: "An error occured!",
-                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
-                })
-                .setDescription(
-                  "Invalid offset. The value must be an integer between `-11` and `14`."
-                )
-                .setColor(process.env.color_red)
-                .setTimestamp(),
-            ],
-            ephemeral: true,
-          })
-          .then((msg) => {
-            msg.delete({ timeout: 10000 });
-          });
+        await interaction.reply({
+          embeds: [
+            new Discord.MessageEmbed()
+              .setAuthor({
+                name: "An error occured!",
+                iconURL: "https://i.imgur.com/PZ9qLe7.png",
+              })
+              .setDescription(
+                "Invalid offset. The value must be an integer between `-11` and `14`."
+              )
+              .setColor(process.env.color_red)
+              .setTimestamp(),
+          ],
+          ephemeral: true,
+        });
+
         return;
       }
 

@@ -51,11 +51,7 @@ module.exports = {
           .setColor(process.env.color_red)
           .setTimestamp();
 
-        return interaction
-          .reply({ embeds: [embed], ephemeral: true })
-          .then((msg) => {
-            msg.delete({ timeout: 10000 });
-          });
+        return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
       let embed = new Discord.MessageEmbed()
