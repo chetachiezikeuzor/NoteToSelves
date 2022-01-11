@@ -47,7 +47,7 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
 (async () => {
   try {
     await rest.put(
-      Routes.applicationCommands(
+      Routes.applicationGuildCommands(
         `${process.env.clientId}`,
         `${process.env.sw_guildId}`
       ),
