@@ -46,11 +46,12 @@ const rest = new REST({ version: "9" }).setToken(process.env.token);
 
 (async () => {
   try {
-    await rclient.application?.commands.cache
-      .find((c) => c.name === "note")
-      .delete();
-    console.log(
-      rclient.application?.commands.cache.find((c) => c.name === "note")
+    await rest.put(
+      Routes.applicationCommands(
+        `${process.env.clientId}`,
+        `${process.env.sw_guildId}`
+      ),
+      { body: [] }
     );
     await rest.put(
       Routes.applicationGuildCommands(
