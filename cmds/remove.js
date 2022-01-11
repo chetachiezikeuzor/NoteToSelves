@@ -47,6 +47,7 @@ module.exports = {
                   .setColor(process.env.color_red)
                   .setTimestamp(),
               ],
+              ephemeral: true,
             })
             .then((msg) => {
               msg.delete({ timeout: 10000 });

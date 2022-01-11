@@ -44,6 +44,7 @@ module.exports = {
               .setColor(process.env.color_red)
               .setTimestamp(),
           ],
+          ephemeral: true,
         });
         return;
       }
