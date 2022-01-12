@@ -115,6 +115,7 @@ module.exports = {
                 [u.reminders[i + 1], u.reminders[i]];
           }
           u.save();
+          console.log(parameters);
 
           let embed = new Discord.MessageEmbed()
             .setColor(process.env.color_blue)
