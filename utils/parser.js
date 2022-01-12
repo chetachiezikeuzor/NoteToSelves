@@ -31,12 +31,10 @@ module.exports.validReminderString = (reminderString) => {
   let reminderTime = moment(parsedDate.start.date());
 
   if (!reminderTime.isValid() || reminderTime <= new Date()) {
-    console.log(parsedDate);
     console.log(reminderTime);
     console.log(chrono.parseDate(reminderString));
     return false;
   }
-  console.log(parsedDate);
   console.log(reminderTime);
   console.log(chrono.parseDate(reminderString));
   return true;
