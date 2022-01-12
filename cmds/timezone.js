@@ -76,7 +76,7 @@ module.exports = {
           .setColor(process.env.color_blue)
           .setDescription(
             `${
-              choice === "self" ? `Your` : `The`
+              choice === "self" ? `Your` : `The channel's`
             } time zone is has been set to \`${offset}\`\nhours from UTC.`
           )
           .setColor(process.env.color_blue)

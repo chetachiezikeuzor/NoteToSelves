@@ -32,7 +32,7 @@ module.exports.validReminderString = (reminderString) => {
     console.log(reminderTime);
     return false;
   }
-
+  console.log(reminderTime);
   return true;
 };
 module.exports.getMessageAndDateFromReminderString = (reminderString) => {
