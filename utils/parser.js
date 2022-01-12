@@ -30,7 +30,7 @@ module.exports.validReminderString = (reminderString) => {
 
   let reminderTime = moment(parsedDate.start.date());
 
-  if (!reminderTime.isValid() || reminderTime <= new Date()) {
+  if (!reminderTime.isValid() || reminderTime <= moment(new Date())) {
     console.log(reminderTime);
     console.log(chrono.parseDate(reminderString));
     return false;
@@ -45,7 +45,6 @@ module.exports.getMessageAndDateFromReminderString = (reminderString) => {
   }
 
   let parsedDate = chrono.parse(reminderString, new Date(), {})[0];
-  console.log(parsedDate);
 
   let message = reminderString.replace(parsedDate.text, "").trim();
 
