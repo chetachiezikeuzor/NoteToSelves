@@ -28,7 +28,21 @@ module.exports = {
 
       finder.then(async (u) => {
         if (!u) {
-          await interaction.reply({ embeds: [embeds.noReminders()] });
+          await interaction.reply({
+            embeds: [
+              new Discord.MessageEmbed()
+                .setAuthor({
+                  name: "An error occured!",
+                  iconURL: "https://i.imgur.com/PZ9qLe7.png",
+                })
+                .setDescription(
+                  "Use `/timezone` to set your time zone before you can add reminders."
+                )
+                .setColor(process.env.color_red)
+                .setTimestamp(),
+            ],
+            ephemeral: true,
+          });
         } else {
           console.log(u.reminders);
           if (u.reminders.length == 0)
