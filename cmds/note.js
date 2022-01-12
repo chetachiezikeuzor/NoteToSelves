@@ -65,6 +65,7 @@ module.exports = {
           });
         } else {
           if (!parser.validReminderString(parameters)) {
+            console.log(parameters);
             await interaction.reply({
               embeds: [
                 new Discord.MessageEmbed()
@@ -114,7 +115,6 @@ module.exports = {
                 [u.reminders[i + 1], u.reminders[i]];
           }
           u.save();
-          console.log(u.reminders);
 
           let embed = new Discord.MessageEmbed()
             .setColor(process.env.color_blue)
