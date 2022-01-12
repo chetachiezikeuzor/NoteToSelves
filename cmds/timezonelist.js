@@ -1,6 +1,7 @@
-const userSchema = require("../models/user");
-const { SlashCommandBuilder } = require("@discordjs/builders");
 const Discord = require("discord.js");
+const userSchema = require("../models/user");
+const channelSchema = require("../models/channel");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const { timeZonesList } = require("../utils/constants");
 const { getTimezoneOffset } = require("../utils/functions");
 
@@ -28,7 +29,12 @@ module.exports = {
         );
       });
 
-      userSchema.findById(interaction.user.id).then((u) => {
+      const finder =
+        choice == "self"
+          ? userSchema.findById(interaction.user.id)
+          : channelSchema.findById(interaction.channel.id);
+
+      finder.then((u) => {
         if (!u) {
           return;
         } else {
