@@ -12,7 +12,9 @@ const cleanSnoozeString = (snoozeString) => {
   return snoozeString;
 };
 module.exports.validReminderString = (reminderString) => {
-  let parsedDate = chrono.parse(reminderString, new Date(), {})[0];
+  let parsedDate = chrono.parse(reminderString, new Date(), {
+    forwardDate: true,
+  })[0];
 
   if (parsedDate == undefined) {
     return false;
@@ -26,9 +28,9 @@ module.exports.validReminderString = (reminderString) => {
     return false;
   }
 
-  let reminderTime = moment(parsedDate.date());
+  let reminderTime = moment(parsedDate.start.date());
 
-  if (!reminderTime.isValid() || reminderTime <= new Date().getTime()) {
+  if (!reminderTime.isValid() || reminderTime <= new Date()) {
     console.log(reminderTime);
     return false;
   }
