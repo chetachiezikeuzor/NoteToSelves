@@ -31,9 +31,13 @@ module.exports.validReminderString = (reminderString) => {
   let reminderTime = moment(parsedDate.start.date());
 
   if (!reminderTime.isValid() || reminderTime <= new Date()) {
+    console.log(reminderTime.isValid());
+    console.log(reminderTime <= new Date());
     console.log(reminderTime);
     return false;
   }
+  console.log(reminderTime.isValid());
+  console.log(reminderTime <= new Date());
   console.log(reminderTime);
   return true;
 };
