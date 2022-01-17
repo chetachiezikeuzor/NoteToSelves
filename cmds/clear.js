@@ -18,7 +18,7 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("confirm")
-        .setDescription("Are you sure?")
+        .setDescription("Are you sure you'd like to clear all reminders?")
         .setRequired(true)
         .addChoice("yes", "yes")
         .addChoice("no", "no")
