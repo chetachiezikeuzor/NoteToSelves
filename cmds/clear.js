@@ -64,7 +64,7 @@ module.exports = {
           const embed = new Discord.MessageEmbed()
             .setColor(process.env.color_blue)
             .setTitle("Cancel")
-            .setDescription("No worries! I won't clear anything.")
+            .setDescription("No worries! I will not clear anything.")
             .setTimestamp();
           await interaction.reply({ embeds: [embed] });
         }
